@@ -79,4 +79,17 @@ export class PolygonObj extends BaseObj {
 		this.v2 = v2;
 		this.v3 = v3;
 	}
+	getInfoTree() {
+		var infoRoot = new CategoryNode("Polygon");
+		var infoV1 = new CategoryNode("V1");
+		var infoV2 = new CategoryNode("V2");
+		var infoV3 = new CategoryNode("V3");
+		infoRoot.addChild(infoV1);
+		infoRoot.addChild(infoV2);
+		infoRoot.addChild(infoV3);
+		infoV1.addChild(this.v1.getInfoTree());
+		infoV2.addChild(this.v2.getInfoTree());
+		infoV3.addChild(this.v2.getInfoTree());
+		return infoRoot;
+	}
 }
