@@ -1,4 +1,4 @@
-import * from "./obj_module";
+import { PointObj , LineObj , PolygonObj } from "./obj_module";
 
-console.log("v5");
+console.log("v6");
 
