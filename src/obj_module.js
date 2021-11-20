@@ -1,4 +1,4 @@
-import * from "./infoTree_module";
+import { CategoryNode , EntryNode } from "./infoTree_module";
 
 ////|
 //|		Base Obj																															-- Base Obj --
