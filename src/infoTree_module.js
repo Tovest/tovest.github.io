@@ -26,10 +26,10 @@ export class CategoryNode extends InfoNode {
 	toText() {
 		if (this.children.length == 0) return title;
 		var childrenText = "";
-		if (this.children.length == 1) childrenText = this.children[0].getText();
+		if (this.children.length == 1) childrenText = this.children[0].toText();
 		else {
-			for (let i=0; i<this.children.length-1; i++) childrenText += (this.children[i].getText()+",");
-			childrenText += this.children[this.children.length-1].getText();
+			for (let i=0; i<this.children.length-1; i++) childrenText += (this.children[i].toText()+",");
+			childrenText += this.children[this.children.length-1].toText();
 		}
 		return (this.title+"["+childrenText+"]")
 	}
