@@ -1,8 +1,5 @@
 import { hello , PointObj , LineObj , PolygonObj } from "./obj_module.js";
 
-hello();
-console.log("v7");
+console.log("v8");
 
-function test() {
-  console.log("ok");
-}
+console.log(new LineObj(new PointObj(1,2,3), new PointObj(4,5,6)).getInfoTree().toString())
