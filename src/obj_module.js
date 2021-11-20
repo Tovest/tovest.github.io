@@ -9,7 +9,7 @@ class BaseObj {
 		this.layer = undefined;
 	}
 	getInfoTree() {
-		return new InfoStringEntryNode("undefined node","!!!");
+		return new EntryNode("undefined node");
 	}
 }
 
@@ -18,7 +18,7 @@ class BaseObj {
 //|		Point Obj																															-- Point Obj --
 ////|
 
-class Point extends BaseObj {
+class PointObj extends BaseObj {
 	constructor(x,y,z) {
 		super();
 		this.x = x;
@@ -26,12 +26,12 @@ class Point extends BaseObj {
 		this.z = z;
 	}
 	getInfoTree() {
-		var infoRoot = new infoTree.CategoryNode("Point");
-		var infoOrigin = new infoTree.CategoryNode("Origin");
+		var infoRoot = new CategoryNode("Point");
+		var infoOrigin = new CategoryNode("Origin");
 		infoRoot.addChild(infoOrigin);
-		infoOrigin.addChild(new infoTree.EntryNode("x"+this.x));
-		infoOrigin.addChild(new infoTree.EntryNode("y"+this.y));
-		infoOrigin.addChild(new infoTree.EntryNode("z"+this.z));
+		infoOrigin.addChild(new EntryNode("x"+this.x));
+		infoOrigin.addChild(new EntryNode("y"+this.y));
+		infoOrigin.addChild(new EntryNode("z"+this.z));
 		return infoTree;
 	}
 }
@@ -41,7 +41,7 @@ class Point extends BaseObj {
 //|		Line Obj																															-- Line Obj --
 ////|
 
-class Line extends BaseObj {
+class LineObj extends BaseObj {
 	constructor(v1,v2) {
 		super();
 		this.v1 = v1;
@@ -53,13 +53,13 @@ class Line extends BaseObj {
 			)
 	}
 	getInfoTree() {
-		var infoRoot = new infoTree.CategoryNode("Line");
-		var infoV1 = new infoTree.CategoryNode("V1");
-		var infoV2 = new infoTree.CategoryNode("V2");
-		var infoProperty = new infoTree.CategoryNode("Property");
-		infoTree.addChild(infoV1);
-		infoTree.addChild(infoV2);
-		infoTree.addChild(infoProperty);
+		var infoRoot = new CategoryNode("Line");
+		var infoV1 = new CategoryNode("V1");
+		var infoV2 = new CategoryNode("V2");
+		var infoProperty = new CategoryNode("Property");
+		infoRoot.addChild(infoV1);
+		infoRoot.addChild(infoV2);
+		infoRoot.addChild(infoProperty);
 		infoV1.addChild(this.v1.getInfoTree());
 		infoV2.addChild(this.v2.getInfoTree());
 		infoProperty.addChild(new infoTree.EntryNode("Length",this.length));
@@ -72,7 +72,7 @@ class Line extends BaseObj {
 //|		Polygon Obj																															--[Polygon Obj]--
 ////|
 
-class Polygon extends BaseObj {
+class PolygonObj extends BaseObj {
 	constructor(v1,v2,v3) {
 		super();
 		this.v1 = v1;
