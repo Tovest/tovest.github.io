@@ -1,5 +1,9 @@
 import { CategoryNode , EntryNode } from "./infoTree_module.js";
 
+export function hello() {
+	console.log("hello world");
+}
+
 ////|
 //|		Base Obj																															-- Base Obj --
 ////|
