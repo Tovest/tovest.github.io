@@ -1,4 +1,4 @@
-import "./infoTree_module";
+import * from "./infoTree_module";
 
 ////|
 //|		Base Obj																															-- Base Obj --
