@@ -18,7 +18,7 @@ class BaseObj {
 //|		Point Obj																															-- Point Obj --
 ////|
 
-class PointObj extends BaseObj {
+export class PointObj extends BaseObj {
 	constructor(x,y,z) {
 		super();
 		this.x = x;
@@ -41,7 +41,7 @@ class PointObj extends BaseObj {
 //|		Line Obj																															-- Line Obj --
 ////|
 
-class LineObj extends BaseObj {
+export class LineObj extends BaseObj {
 	constructor(v1,v2) {
 		super();
 		this.v1 = v1;
@@ -72,7 +72,7 @@ class LineObj extends BaseObj {
 //|		Polygon Obj																															--[Polygon Obj]--
 ////|
 
-class PolygonObj extends BaseObj {
+export class PolygonObj extends BaseObj {
 	constructor(v1,v2,v3) {
 		super();
 		this.v1 = v1;
