@@ -1,4 +1,6 @@
 import { CategoryNode , EntryNode } from "./infoTree_module.js";
+import { Camera } from "./camera_module.js";
+import { PointArea, LineArea , TriangleArea } from "./area_module.js"
 
 ////|
 //|		Base Obj																															-- Base Obj --
@@ -10,6 +12,9 @@ class BaseObj {
 	}
 	getInfoTree() {
 		return new EntryNode("undefined node");
+	}
+	getSelectArea(camera) {
+		return undefined;
 	}
 }
 
