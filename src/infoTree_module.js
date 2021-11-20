@@ -14,7 +14,7 @@ class InfoNode {
 //|		CategoryNode																																-- CategoryNode --
 ////|
 
-class CategoryNode extends InfoNode {
+export class CategoryNode extends InfoNode {
 	constructor(title) {
 		this.title = title;
 		this.children = [];
@@ -39,7 +39,7 @@ class CategoryNode extends InfoNode {
 //|		EntryNode																																-- EntryNode --
 ////|
 
-class EntryNode extends InfoNode {
+export class EntryNode extends InfoNode {
 	constructor(content) {
 		this.content = content;
 	}
