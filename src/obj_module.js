@@ -32,7 +32,7 @@ class PointObj extends BaseObj {
 		infoOrigin.addChild(new EntryNode("x"+this.x));
 		infoOrigin.addChild(new EntryNode("y"+this.y));
 		infoOrigin.addChild(new EntryNode("z"+this.z));
-		return infoTree;
+		return infoRoot;
 	}
 }
 
@@ -62,8 +62,8 @@ class LineObj extends BaseObj {
 		infoRoot.addChild(infoProperty);
 		infoV1.addChild(this.v1.getInfoTree());
 		infoV2.addChild(this.v2.getInfoTree());
-		infoProperty.addChild(new infoTree.EntryNode("Length",this.length));
-		return infoTree;
+		infoProperty.addChild(new EntryNode("Length"+this.length));
+		return infoRoot;
 	}
 }
 
