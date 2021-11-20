@@ -1,4 +1,4 @@
-import { hello , PointObj , LineObj , PolygonObj } from "./obj_module.js";
+import { PointObj , LineObj , PolygonObj } from "./obj_module.js";
 
 console.log("v9");
 
