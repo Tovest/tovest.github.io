@@ -33,9 +33,9 @@ export class PointObj extends BaseObj {
 		var infoRoot = new CategoryNode("Point");
 		var infoOrigin = new CategoryNode("Origin");
 		infoRoot.addChild(infoOrigin);
-		infoOrigin.addChild(new EntryNode("x"+this.x));
-		infoOrigin.addChild(new EntryNode("y"+this.y));
-		infoOrigin.addChild(new EntryNode("z"+this.z));
+		infoOrigin.addChild(new EntryNode("x",this.x));
+		infoOrigin.addChild(new EntryNode("y",this.y));
+		infoOrigin.addChild(new EntryNode("z",this.z));
 		return infoRoot;
 	}
 }
@@ -66,7 +66,7 @@ export class LineObj extends BaseObj {
 		infoRoot.addChild(infoProperty);
 		infoV1.addChild(this.v1.getInfoTree());
 		infoV2.addChild(this.v2.getInfoTree());
-		infoProperty.addChild(new EntryNode("Length"+this.length));
+		infoProperty.addChild(new EntryNode("Length",this.length));
 		return infoRoot;
 	}
 }
