@@ -47,6 +47,6 @@ export class EntryNode extends InfoNode {
 		this.content = content;
 	}
 	toText() {
-		return (this.title+": "+this.content);
+		return (this.title+":"+this.content);
 	}
 }
