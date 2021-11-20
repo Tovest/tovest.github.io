@@ -1,4 +1,4 @@
 import * from "./obj_module";
 
-console.log("v4");
+console.log("v5");
 
