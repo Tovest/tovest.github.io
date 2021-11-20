@@ -41,11 +41,12 @@ export class CategoryNode extends InfoNode {
 ////|
 
 export class EntryNode extends InfoNode {
-	constructor(content) {
+	constructor(title,content) {
 		super();
+		this.title = title;
 		this.content = content;
 	}
 	toText() {
-		return this.content;
+		return (this.title+": "+this.content);
 	}
 }
