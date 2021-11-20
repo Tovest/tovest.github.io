@@ -4,7 +4,7 @@
 
 class InfoNode {
 	constructor() {}
-	toString() {
+	toText() {
 		return "undefined text";
 	}
 }
@@ -22,7 +22,7 @@ export class CategoryNode extends InfoNode {
 	addChild(node) {
 		this.children.push(node);
 	}
-	toString() {
+	toText() {
 		if (this.children.length == 0) return title;
 		var childrenText = "";
 		if (this.children.length == 1) childrenText = this.children[0].getText();
@@ -43,7 +43,7 @@ export class EntryNode extends InfoNode {
 	constructor(content) {
 		this.content = content;
 	}
-	toString() {
+	toText() {
 		return this.content;
 	}
 }
