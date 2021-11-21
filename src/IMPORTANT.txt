@@ -1,0 +1,2 @@
+Currently there is no check for a division by 0 in LineArea (area_module.js)
+> Should a line be long 0?
