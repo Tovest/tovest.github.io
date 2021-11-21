@@ -9,6 +9,11 @@ export class World {
 export class View {
 	constructor() {
 		this.world = undefined;
+		this.canvas = undefined;
+		this.elements2d = [];
+	}
+	render() {
+		console.log(this.elements2d);
 	}
 }
 
