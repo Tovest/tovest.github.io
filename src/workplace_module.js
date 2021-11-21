@@ -1,3 +1,5 @@
+import { Camera } from "./camera_module.js"
+
 export class Workplace {
 	constructor() {
 		
@@ -6,7 +8,7 @@ export class Workplace {
 
 export class World {
 	constructor() {
-		this.vertexList = [];
 		this.objList = [];
+		this.camera = new Camera(0,0,0,0,1,0,90);
 	}
 }
