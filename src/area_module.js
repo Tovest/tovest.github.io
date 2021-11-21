@@ -4,6 +4,10 @@ function distance(x1,y1,x2,y2) {
 		(y1-y2)*(y1-y2)
 	)
 }
+function sideOfLineUnormalized(x1,y1,x2,y2,x3,y3) {
+	return (x2-x1)*(y1-y3)-(y2-y1)*(x1-x3)
+}
+
 class AreaBase {
 	constructor() {}
 	isInArea(x,y) {
@@ -34,16 +38,12 @@ export class LineArea extends AreaBase {
 		this.width = width;
 	}
 	isInArea(x,y) {
-		var distanceFrom1 = distance(this.x1,this.y1,x,y);
-		if (distanceFrom1 <= this.width) return true;
-		var distanceFrom2 = distance(this.x2,this.y2,x,y);
-		if (distanceFrom2 <= this.width) return true;
 		var length = distance(this.x1,this.y1,this.x2,this.y2);
 		var distanceFromLine =
 		    Math.abs((this.x2-this.x1)*(this.y1-y)-(this.y2-this.y1)*(this.x1-x))/length;
 		var distanceFromPerpendicularBisector =
-		    Math.abs((this.y1-this.y2)*((this.y1+this.y2)/2.0-y)-(this.x1-this.x2)*((this.x1+this.x2)/2.0-y))/length;
-		return (distanceFromLine <= this.width && distanceFromPerpendicularBisector <= length/2);
+		    Math.abs((this.y1-this.y2)*((this.y1+this.y2)/2.0-y)-(this.x1-this.x2)*((this.x1+this.x2)/2.0-x))/length;
+		return (distanceFromLine <= this.width && distanceFromPerpendicularBisector <= length/2.0);
 	}
 }
 
@@ -58,6 +58,9 @@ export class TriangleArea extends AreaBase {
 		this.y3 = y3;
 	}
 	isInArea(x,y) {
-		return false; //ToDo
+		return
+			sideOfLineUnormalized(this.x1,this.y1,this.x2,this.y2,x,y) >= 0 &&
+			sideOfLineUnormalized(this.x1,this.y1,this.x2,this.y2,x,y) >= 0 &&
+			sideOfLineUnormalized(this.x1,this.y1,this.x2,this.y2,x,y) >= 0
 	}
 }
