@@ -6,6 +6,7 @@ export class Camera {
 		this.dirX = dirX;
 		this.dirY = dirY;
 		this.dirZ = dirZ;
+		this.renderCanvas = undefined;
 	}
 	translateToElements2d(objList) {
 		return [];
