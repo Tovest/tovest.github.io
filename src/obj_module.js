@@ -14,7 +14,7 @@ class BaseObj {
 		return new EntryNode("undefined node");
 	}
 	getSelectArea(camera) {
-		return undefined;
+		return [];
 	}
 }
 
