@@ -59,8 +59,8 @@ export class TriangleArea extends AreaBase {
 	}
 	isInArea(x,y) {
 		return
-			sideOfLineUnormalized(this.x1,this.y1,this.x2,this.y2,x,y) >= 0 &&
-			sideOfLineUnormalized(this.x1,this.y1,this.x2,this.y2,x,y) >= 0 &&
-			sideOfLineUnormalized(this.x1,this.y1,this.x2,this.y2,x,y) >= 0
+			( sideOfLineUnormalized(this.x1,this.y1,this.x2,this.y2,x,y) >= 0 ) ==
+			( sideOfLineUnormalized(this.x2,this.y2,this.x3,this.y3,x,y) >= 0 ) ==
+			( sideOfLineUnormalized(this.x3,this.y3,this.x1,this.y1,x,y) >= 0 )
 	}
 }
