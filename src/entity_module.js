@@ -4,7 +4,8 @@ export class entity {
 	constructor() {
 		this.body = []; //Array of obj from obj_module
 	}
-	render(view) {
+	setupCanvas(canvas) {
+		//canvas has a list of elements2d to draw and selectable areas.
 		return undefined //ToDo
 	}
 }
