@@ -8,3 +8,5 @@ Use objects to define the corrisponing points in area_module.js.
 in area_module.js "line" still doesn't have the getCorrispondingPoint setup.
 
 events can be stacked, as an example hovering over a selectArea could add a sprite to the canvas AND a popup description.
+
+every element2d.
