@@ -10,8 +10,11 @@ function sideOfLineUnormalized(x1,y1,x2,y2,x3,y3) {
 
 class AreaBase {
 	constructor() {}
-	isInArea(x,y) {
+	containsPoint(x,y) {
 		return false;
+	}
+	getCorrispondingPoint(x,y) {
+		return undefined;
 	}
 }
 
@@ -22,9 +25,12 @@ export class PointArea extends AreaBase {
 		this.y = y;
 		this.radius = radius;
 	}
-	isInArea(x,y) {
+	containsPoint(x,y) {
 		var distance = distance(this.x1,this.y1,x,y);
 		return (distance <= this.radius);
+	}
+	getCorrispondingPoint(x,y) {
+		return [this.x,this.y];
 	}
 }
 
@@ -37,13 +43,16 @@ export class LineArea extends AreaBase {
 		this.y2 = y2;
 		this.width = width;
 	}
-	isInArea(x,y) {
+	containsPoint(x,y) {
 		var length = distance(this.x1,this.y1,this.x2,this.y2);
 		var distanceFromLine =
 		    Math.abs((this.x2-this.x1)*(this.y1-y)-(this.y2-this.y1)*(this.x1-x))/length;
 		var distanceFromPerpendicularBisector =
 		    Math.abs((this.y1-this.y2)*((this.y1+this.y2)/2.0-y)-(this.x1-this.x2)*((this.x1+this.x2)/2.0-x))/length;
 		return (distanceFromLine <= this.width && distanceFromPerpendicularBisector <= length/2.0);
+	}
+	getCorrispondingPoint(x,y) {
+		return undefined; //ToDo
 	}
 }
 
@@ -57,10 +66,13 @@ export class TriangleArea extends AreaBase {
 		this.x3 = x3;
 		this.y3 = y3;
 	}
-	isInArea(x,y) {
+	containsPoint(x,y) {
 		return
 			( sideOfLineUnormalized(this.x1,this.y1,this.x2,this.y2,x,y) >= 0 ) ==
 			( sideOfLineUnormalized(this.x2,this.y2,this.x3,this.y3,x,y) >= 0 ) ==
 			( sideOfLineUnormalized(this.x3,this.y3,this.x1,this.y1,x,y) >= 0 )
+	}
+	getCorrispondingPoint(x,y) {
+		return [x,y];
 	}
 }
