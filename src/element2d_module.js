@@ -1,3 +1,5 @@
 export class Sprite {
-	constructor() {}
+	constructor(x,y,image) {
+		//ToDo
+	}
 }
