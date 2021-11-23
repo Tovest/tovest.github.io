@@ -3,6 +3,6 @@ Currently there is no check for a division by 0 in LineArea (area_module.js)
 
 Change all instances of a for loop with a for-in loop.
 
-Use anonymous class to define the corrisponing points in area_module.js.
+Use objects to define the corrisponing points in area_module.js.
 
 in area_module.js "line" still doesn't have the getCorrispondingPoint setup.
