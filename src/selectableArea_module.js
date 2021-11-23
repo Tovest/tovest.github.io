@@ -5,9 +5,11 @@ export class SelectableArea {
 		this.onClick = undefined;
 	}
 	notifyHover(x,y,canvas) {
-		this.onHover.execute(this,x,y,canvas);
+		var point = this.area.getCorrispondingPoint(x,y);
+		this.onHover.execute(this,point[0],point[1],canvas);
 	}
 	notifyClick(x,y,canvas) {
-		this.onClick.execute(this,x,y,canvas);
+		var point = this.area.getCorrispondingPoint(x,y);
+		this.onClick.execute(this,point[0],point[1],canvas);
 	}
 }
