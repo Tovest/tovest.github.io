@@ -1,11 +1,11 @@
-export class vec2 {
+export class Vector2d {
 	constructor(x,y) {
 		this.x = x;
 		this.y = y;
 	}
 }
 
-export class vec3 {
+export class Vector3d {
 	constructor(x,y,z) {
 		this.x = x;
 		this.y = y;
