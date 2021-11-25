@@ -1,11 +1,9 @@
-import { View } from "./workplace_modeule.js"
-
 export class entity {
 	constructor() {
 		this.body = []; //Array of obj from obj_module
 	}
-	setupCanvas(canvas) {
-		//canvas has a list of elements2d to draw and selectable areas.
-		return undefined //ToDo
+	translateToCanvas(camera,canvas) {
+		//ToDo, this should setup canvas with elements2d and selectable areas.
+		return;
 	}
 }
