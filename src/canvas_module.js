@@ -10,6 +10,9 @@ export class Canvas {
 			}
 		}
 	}
+	addSelectableAreas(selectableArea) {
+		this.selectableAreas.push(selectableArea);
+	}
 	addElement2d(element2d) {
 		this.element2d.push(element2d);
 	}
