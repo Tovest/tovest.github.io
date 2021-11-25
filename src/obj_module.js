@@ -39,7 +39,7 @@ export class PointObj extends BaseObj {
 		return infoRoot;
 	}
 	getOrthoElements2d(camera) {
-		var sprite = new Sprite(???) //ToDo
+		var sprite = new Sprite(???) //ToDo, translate the 3d point in 2d on the cameraOrtho, with depth
 		return [];
 	}
 }
