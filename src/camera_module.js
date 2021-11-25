@@ -21,7 +21,7 @@ export class CameraOrtho {
 			entityList[i].translateToCanvas(this,canvas);
 		}
 	}
-	objToElement2d(obj) {
-		return obj.getOrthoElements2d(this);
+	objToCoords(obj) {
+		return obj.getOrthoCoords(this);
 	}
 }
