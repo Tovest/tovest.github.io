@@ -1,5 +1,5 @@
 import { CategoryNode , EntryNode } from "./infoTree_module.js";
-import { Vector2d } from "./vector.js";
+import { Vector3d } from "./vector.js";
 
 ////|
 //|		Base Obj																															-- Base Obj --
