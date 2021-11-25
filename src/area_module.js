@@ -1,3 +1,5 @@
+import { Vector2d } from "./vector.js"
+
 function distance(x1,y1,x2,y2) {
 	return Math.sqrt(
 		(x1-x2)*(x1-x2)+
@@ -21,16 +23,16 @@ class AreaBase {
 export class PointArea extends AreaBase {
 	constructor(x,y,radius) {
 		super();
-		this.x = x;
-		this.y = y;
+		this.centerX = x;
+		this.centerY = y;
 		this.radius = radius;
 	}
 	containsPoint(x,y) {
-		var distance = distance(this.x1,this.y1,x,y);
+		var distance = distance(this.centerX,this.centerY,x,y);
 		return (distance <= this.radius);
 	}
 	getCorrispondingPoint(x,y) {
-		return [this.x,this.y];
+		return new Vector2d(this.centerX,this.centerY);
 	}
 }
 
@@ -73,6 +75,6 @@ export class TriangleArea extends AreaBase {
 			( sideOfLineUnormalized(this.x3,this.y3,this.x1,this.y1,x,y) >= 0 )
 	}
 	getCorrispondingPoint(x,y) {
-		return [x,y];
+		return new Vector2d(x,y);
 	}
 }
