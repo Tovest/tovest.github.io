@@ -1,4 +1,7 @@
 import { PointObj } from "./obj_module.js"
+import { PointArea } from "./area_module.js"
+import { SelectableArea } from "./selectableArea_module.js"
+import { Vector3d } from "./vector.js"
 
 export class entity {
 	constructor() {}
@@ -12,9 +15,11 @@ export class snapPoint {
 		this.point = new PointObj(x,y,z);
 	}
 	translateToCanvas(camera,canvas) {
-		canvas.addElement2d()
-		canvas.addSelectableArea()
-		return;
+		var coords = camera.objToCoords(this.point);
+		var selectableArea = new SelectableArea(new PointArea(coords.x,coords.y,5));
+		selectableArea.onHover = new eventAddSprite(/*spriteHover*/);
+		selectableArea.onClick = new eventProressRequest();
+		canvas.addElement2d(new Sprite(coords.x,coords.y,coords.depth,/*spriteSnapPoint*/));
+		canvas.addSelectableArea(selectableArea);
 	}
-	
 }
