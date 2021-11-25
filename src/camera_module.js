@@ -6,10 +6,9 @@ export class Camera {
 		this.dirX = dirX;
 		this.dirY = dirY;
 		this.dirZ = dirZ;
-		this.renderCanvas = undefined;
 	}
-	translateToElements2d(objList) {
-		return [];
+	renderEntities(entityList,canvas) {
+		return;
 	}
 }
 
@@ -17,10 +16,10 @@ export class CameraOrtho {
 	constructor(x,y,z,dirX,dirY,dirZ) {
 		super(x,y,z,dirX,dirY,dirZ);
 	}
-	translateToElements2d(objList) {
-		var elements2d = [];
-		for (int i=0; i<objList.length; i++) {
-			elements2d.push( ...(objList[i].toElements2d(this)) );
+	renderEntities(entityList,canvas) {
+		for (let i=0; i<entityList.length; i++) {
+			canvas.addElement2d(entityList[i].translateToCanvas(this,canvas));
 		}
+		return;
 	}
 }
