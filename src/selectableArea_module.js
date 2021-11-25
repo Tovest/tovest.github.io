@@ -6,10 +6,10 @@ export class SelectableArea {
 	}
 	notifyHover(x,y,canvas) {
 		var point = this.area.getCorrispondingPoint(x,y);
-		this.onHover.execute(this,point[0],point[1],canvas);
+		this.onHover.execute(this,point.x,point.y,canvas);
 	}
 	notifyClick(x,y,canvas) {
 		var point = this.area.getCorrispondingPoint(x,y);
-		this.onClick.execute(this,point[0],point[1],canvas);
+		this.onClick.execute(this,point.x,point.y,canvas);
 	}
 }
