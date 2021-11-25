@@ -18,8 +18,7 @@ export class CameraOrtho {
 	}
 	renderEntities(entityList,canvas) {
 		for (let i=0; i<entityList.length; i++) {
-			canvas.addElement2d(entityList[i].translateToCanvas(this,canvas));
+			entityList[i].translateToCanvas(this,canvas);
 		}
-		return;
 	}
 }
