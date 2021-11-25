@@ -1,4 +1,5 @@
 import { CategoryNode , EntryNode } from "./infoTree_module.js";
+import { Sprite } from "./element2d_module.js"
 
 ////|
 //|		Base Obj																															-- Base Obj --
@@ -11,7 +12,7 @@ class BaseObj {
 	getInfoTree() {
 		return new EntryNode("undefined node");
 	}
-	getSelectArea(camera) {
+	getOrthoElements2d(camera) {
 		return [];
 	}
 }
@@ -36,6 +37,10 @@ export class PointObj extends BaseObj {
 		infoOrigin.addChild(new EntryNode("y",this.y));
 		infoOrigin.addChild(new EntryNode("z",this.z));
 		return infoRoot;
+	}
+	getOrthoElements2d(camera) {
+		var sprite = new Sprite(???) //ToDo
+		return [];
 	}
 }
 
