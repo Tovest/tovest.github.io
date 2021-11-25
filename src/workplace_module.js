@@ -1,25 +1,13 @@
-import { Camera } from "./camera_module.js"
-
-export class World {
-	constructor() {
-		this.objList = [];
-	}
-}
-
-export class View {
-	constructor() {
-		this.world = undefined;
-		this.canvas = undefined;
-		this.elements2d = [];
-	}
-	render() {
-		console.log(this.elements2d);
-	}
-}
+import { Camera } from "./camera_module.js";
+import { Canvas } from "./canvas_module.js";
 
 export class Workplace {
-	constructor() {
-		//this.options = undefined; //Not yet, ToDo
-		//this.
+	constructor(canvas) {
+		this.entityList = [];
+		this.activeCamera = new Camera(0,0,0,0,1,0);
+		this.canvas = canvas;
+	}
+	render() {
+		this.activeCamera.renderEntities(this.entityList,this.canvas);
 	}
 }
