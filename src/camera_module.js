@@ -1,11 +1,11 @@
 export class Camera {
-	constructor(x,y,z,dirX,dirY,dirZ) {
+	constructor(x,y,z,angX,angY,angZ) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.dirX = dirX;
-		this.dirY = dirY;
-		this.dirZ = dirZ;
+		this.angX = angX;
+		this.angY = angY;
+		this.angZ = angZ;
 	}
 	renderEntities(entityList,canvas) {
 		return;
@@ -13,13 +13,8 @@ export class Camera {
 }
 
 export class CameraOrtho {
-	constructor(x,y,z,dirX,dirY,dirZ) {
-		super(x,y,z,dirX,dirY,dirZ);
-	}
-	renderEntities(entityList,canvas) {
-		for (let i=0; i<entityList.length; i++) {
-			entityList[i].translateToCanvas(this,canvas);
-		}
+	constructor(x,y,z,angX,angY,angZ) {
+		super(x,y,z,angX,angY,angZ);
 	}
 	objToCoords(obj) {
 		return obj.getOrthoCoords(this);
