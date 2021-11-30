@@ -18,3 +18,5 @@ When the mouse hovers the canvas every selectableArea checks if the mouse is wit
 A camera can be requested to render a collection of entities on a canvas:
 When this happens the camera will iterate through all entities and ask to itself to the canvas, to do so it requires the coordinates of it's body so it passes the obj of the body to the camera which will handle the conversion through the corrisponding method (defined in the objs).
 //or whatever, should probably draw this instead of explaining it with words...
+
+Camera.js need a lot of performance upgrades.
