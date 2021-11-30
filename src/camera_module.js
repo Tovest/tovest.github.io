@@ -7,7 +7,7 @@ function rotate(point,axis,angle) {
 		point.x*(c*c + s*s*(axis.x*axis.x - axis.y*axis.y - axis.z*axis.z)) + point.y*(2*axis.x*s*axis.y*s - 2*c*axis.z*s) + point.z*(2*axis.x*s*axis.z*s + 2*c*axis.y*s),
 		point.y*(c*c + s*s*(axis.y*axis.y - axis.z*axis.z - axis.x*axis.x)) + point.z*(2*axis.y*s*axis.z*s - 2*c*axis.x*s) + point.x*(2*axis.y*s*axis.x*s + 2*c*axis.z*s),
 		point.z*(c*c + s*s*(axis.z*axis.z - axis.x*axis.x - axis.y*axis.y)) + point.x*(2*axis.z*s*axis.x*s - 2*c*axis.y*s) + point.y*(2*axis.z*s*axis.y*s + 2*c*axis.x*s)
-	)
+	);
 }
 
 export class Camera {
@@ -34,8 +34,15 @@ export class Camera {
 		var cy = Math.cos(yaw/2);
 		var sy2 = Math.sin((yaw-(Math.PI/2))/2);
 		var cy2 = Math.cos((yaw-(Math.PI/2))/2);
-		this.vectorFront = new Vector3d(-2*cy*sy,cy*cy-sy*sy,0)
-		this.vectorSide = new Vector3d(-2*cy2*sy2,cy2*cy2-sy2*sy2,0)
+		this.vectorFront = new Vector3d(-2*cy*sy,cy*cy-sy*sy,0);
+		this.vectorSide = new Vector3d(-2*cy2*sy2,cy2*cy2-sy2*sy2,0);
+		this.vectorFront = rotate(this.vectorFront,this.vectorSide,this.pitch);
+		this.vectorSide = rotate(this.vectorSide,this.vectorFront,this.roll);
+		this.vectorUp = new Vector3d(
+			(this.vectorSide.y-this.vectorFront.z)-(this.vectorSide.z-this.vectorFront.y),
+			(this.vectorSide.z-this.vectorFront.x)-(this.vectorSide.x-this.vectorFront.z),
+			(this.vectorSide.x-this.vectorFront.y)-(this.vectorSide.y-this.vectorFront.x)
+		);
 	}
 }
 
