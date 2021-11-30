@@ -23,9 +23,6 @@ export class Camera {
 		this.vectorUp = undefined;
 		updateAngles(yaw,pitch,roll);
 	}
-	renderEntities(entityList,canvas) {
-		return;
-	}
 	updateAngles(yaw,pitch,roll) {
 		this.yaw = yaw;
 		this.pitch = pitch;
@@ -36,19 +33,22 @@ export class Camera {
 		var cy2 = Math.cos((yaw-(Math.PI/2))/2);
 		this.vectorFront = new Vector3d(-2*cy*sy,cy*cy-sy*sy,0);
 		this.vectorSide = new Vector3d(-2*cy2*sy2,cy2*cy2-sy2*sy2,0);
-		this.vectorFront = rotate(this.vectorFront,this.vectorSide,this.pitch);
-		this.vectorSide = rotate(this.vectorSide,this.vectorFront,this.roll);
+		this.vectorFront = rotate(this.vectorFront,this.vectorSide,pitch);
+		this.vectorSide = rotate(this.vectorSide,this.vectorFront,roll);
 		this.vectorUp = new Vector3d(
-			(this.vectorSide.y-this.vectorFront.z)-(this.vectorSide.z-this.vectorFront.y),
-			(this.vectorSide.z-this.vectorFront.x)-(this.vectorSide.x-this.vectorFront.z),
-			(this.vectorSide.x-this.vectorFront.y)-(this.vectorSide.y-this.vectorFront.x)
+			(this.vectorSide.y*this.vectorFront.z)-(this.vectorSide.z*this.vectorFront.y),
+			(this.vectorSide.z*this.vectorFront.x)-(this.vectorSide.x*this.vectorFront.z),
+			(this.vectorSide.x*this.vectorFront.y)-(this.vectorSide.y*this.vectorFront.x)
 		);
+	}
+	objToCoords(obj) {
+		return;
 	}
 }
 
 export class CameraOrtho {
-	constructor(x,y,z,angX,angY,angZ) {
-		super(x,y,z,angX,angY,angZ);
+	constructor(x,y,z,yaw,pitch,roll) {
+		super(x,y,z,yaw,pitch,roll);
 	}
 	objToCoords(obj) {
 		return obj.getOrthoCoords(this);
