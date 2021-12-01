@@ -39,7 +39,11 @@ export class PointObj extends BaseObj {
 		return infoRoot;
 	}
 	getOrthoCoords(camera) {
-		return new Vector3d(???) //ToDo, translate the 3d point in 2d on the cameraOrtho, with depth
+		//Coords are basically the distance from the camera of the point's projection on the frontal plane (calculated using the corrisponding plane).
+		//Projection calculated as the midpoint between the original point's coords and the one rotated 180° using vectorSide as axis.
+		return new Vector3d(
+			//ToDo
+		)
 	}
 }
 
