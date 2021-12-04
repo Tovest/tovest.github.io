@@ -11,7 +11,7 @@ export class Canvas {
 		}
 		console.log("Hover at ", x, " ",y);
 	}
-	addSelectableAreas(selectableArea) {
+	addSelectableArea(selectableArea) {
 		this.selectableAreas.push(selectableArea);
 	}
 	addElement2d(element2d) {
