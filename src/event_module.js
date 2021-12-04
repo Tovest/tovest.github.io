@@ -1,14 +1,14 @@
 import { PointArea , LineArea , TriangleArea } from "./area_module.js"
 import { Sprite } from "./element2d_module.js"
 
-export class event {
+export class Event {
 	constructor() {}
 	execute(requestingArea,x,y,canvas) {
 		return;
 	}
 }
 
-export class eventAddSprite extends event {
+export class EventAddSprite extends event {
 	constructor(image) {
 		this.image = image;
 	}
@@ -17,7 +17,7 @@ export class eventAddSprite extends event {
 	}
 }
 
-export class eventConsoleLog extends event {
+export class EventConsoleLog extends event {
 	constructor(message) {
 		this.message = message;
 	}
