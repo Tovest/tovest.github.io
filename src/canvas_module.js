@@ -3,7 +3,7 @@ export class Canvas {
 		this.selectableAreas = [];
 		this.elements2d = [];
 	}
-	onHover(x,y) {
+	triggerHover(x,y) {
 		for (let i=0; i<this.selectableAreas.length; i++) {
 			if (this.selectableAreas[i].area.containsPoint(x,y)) {
 				this.selectableAreas[i].notifyHover(x,y,this);
