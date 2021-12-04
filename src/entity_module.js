@@ -15,11 +15,10 @@ export class snapPoint {
 		this.point = new PointObj(x,y,z);
 	}
 	translateToCanvas(camera,canvas) {
-		var coords = camera.objToCoords(this.point);
+		var coords = camera.getScreenCoordsOfPoint(this.point.x,this.point.y,this.point.z);
 		var selectableArea = new SelectableArea(new PointArea(coords.x,coords.y,5));
-		selectableArea.onHover = new eventAddSprite(/*spriteHover*/);
-		selectableArea.onClick = new eventProressRequest();
-		canvas.addElement2d(new Sprite(coords.x,coords.y,coords.depth,/*spriteSnapPoint*/));
+		selectableArea.onHover = new eventConsoleLog("Hovering Snap Point");
+		selectableArea.onClick = new eventConsoleLog("Clicked Snap Point");
 		canvas.addSelectableArea(selectableArea);
 	}
 }
