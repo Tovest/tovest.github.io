@@ -41,7 +41,7 @@ export class Camera {
 			(this.vectorSide.x*this.vectorFront.y)-(this.vectorSide.y*this.vectorFront.x)
 		);
 	}
-	getScreenCoordsOfVertex(x,y,z) {
+	getScreenCoordsOfPoint(x,y,z) {
 		console.log("This camera hasn't defined the getScreenCoordsOfVertex function")
 		return new Vector3d(0,0,0);
 	}
@@ -51,7 +51,7 @@ export class CameraOrtho {
 	constructor(x,y,z,yaw,pitch,roll) {
 		super(x,y,z,yaw,pitch,roll);
 	}
-	getScreenCoordsOfVertex(x,y,z) {
+	getScreenCoordsOfPoint(x,y,z) {
 		var vertexRotated = new rotate(new Vector3d(x,y,z),this.vectorSide,Math.PI);
 		//// The vertex projection's position on the front plane is simply the mid point between
 		//// the original position and the position of the vertex rotated 180° around vectorSide
