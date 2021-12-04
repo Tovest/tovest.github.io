@@ -9,6 +9,7 @@ export class Canvas {
 				this.selectableAreas[i].notifyHover(x,y,this);
 			}
 		}
+		console.log("Hover at ", x, " ",y);
 	}
 	addSelectableAreas(selectableArea) {
 		this.selectableAreas.push(selectableArea);
