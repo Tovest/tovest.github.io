@@ -10,7 +10,7 @@ export class entity {
 		return;
 	}
 }
-export class snapPoint {
+export class snapPoint extends entity {
 	constructor(x,y,z) {
 		this.point = new PointObj(x,y,z);
 	}
