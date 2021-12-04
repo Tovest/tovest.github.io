@@ -12,6 +12,7 @@ export class Entity {
 }
 export class SnapPoint extends Entity {
 	constructor(x,y,z) {
+		super();
 		this.point = new PointObj(x,y,z);
 	}
 	translateToCanvas(camera,canvas) {
