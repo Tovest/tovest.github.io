@@ -14,3 +14,4 @@ workplace.entityList.push(point);
 console.log(workplace);
 workplace.render();
 canvas.triggerHover(5,6);
+canvas.triggerHover(0,0);
