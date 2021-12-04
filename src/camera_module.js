@@ -43,7 +43,7 @@ export class Camera {
 	}
 	getScreenCoordsOfVertex(x,y,z) {
 		console.log("This camera hasn't defined the getScreenCoordsOfVertex function")
-		return new new Vector3d(0,0,0);
+		return new Vector3d(0,0,0);
 	}
 }
 
