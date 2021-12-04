@@ -21,7 +21,7 @@ export class Camera {
 		this.vectorFront = undefined;
 		this.vectorSide = undefined;
 		this.vectorUp = undefined;
-		updateAngles(yaw,pitch,roll);
+		this.updateAngles(yaw,pitch,roll);
 	}
 	updateAngles = (yaw,pitch,roll) => {
 		this.yaw = yaw;
