@@ -52,7 +52,9 @@ export class CameraOrtho extends Camera {
 		super(x,y,z,yaw,pitch,roll);
 	}
 	getScreenCoordsOfPoint(x,y,z) {
-		var vertexRotated = new rotate(new Vector3d(x,y,z),this.vectorSide,Math.PI);
+		console.log(x,y,z);
+		var vertexRotated = rotate(new Vector3d(x,y,z),this.vectorSide,Math.PI);
+		console.log(vertexRotated);
 		//// The vertex projection's position on the front plane is simply the mid point between
 		//// the original position and the position of the vertex rotated 180° around vectorSide
 		var projection = new Vector3d( (x+vertexRotated.x)/2 , (y+vertexRotated.y)/2 , (z+vertexRotated.z)/2 );
