@@ -11,7 +11,7 @@ export class Canvas {
 			}
 		}
 	}
-	canvasElement.onmouseover = function(e) {triggerHover(e.offsetX,e.offsetY)};
+	this.canvasElement.onmouseover = function(e) {triggerHover(e.offsetX,e.offsetY)};
 	addSelectableArea(selectableArea) {
 		this.selectableAreas.push(selectableArea);
 	}
