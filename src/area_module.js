@@ -28,8 +28,8 @@ export class PointArea extends AreaBase {
 		this.radius = radius;
 	}
 	containsPoint(x,y) {
-		var distance = distance(this.centerX,this.centerY,x,y);
-		return (distance <= this.radius);
+		var dist = distance(this.centerX,this.centerY,x,y);
+		return (dist <= this.radius);
 	}
 	getCorrispondingPoint(x,y) {
 		return new Vector2d(this.centerX,this.centerY);
