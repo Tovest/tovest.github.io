@@ -41,8 +41,9 @@ export class Camera {
 			(this.vectorSide.x*this.vectorFront.y)-(this.vectorSide.y*this.vectorFront.x)
 		);
 	}
-	objToCoords(obj) {
-		return;
+	getScreenCoordsOfVertex(x,y,z) {
+		console.log("This camera hasn't defined the getScreenCoordsOfVertex function")
+		return new new Vector3d(0,0,0);
 	}
 }
 
@@ -50,7 +51,17 @@ export class CameraOrtho {
 	constructor(x,y,z,yaw,pitch,roll) {
 		super(x,y,z,yaw,pitch,roll);
 	}
-	objToCoords(obj) {
-		return obj.getOrthoCoords(this);
+	getScreenCoordsOfVertex(x,y,z) {
+		var vertexRotated = new rotate(new Vector3d(x,y,z),this.vectorSide,Math.PI);
+		//// The vertex projection's position on the front plane is simply the mid point between
+		//// the original position and the position of the vertex rotated 180° around vectorSide
+		var projection = new Vector3d( (x+vertexRotated.x)/2 , (y+vertexRotated.y)/2 , (z+vertexRotated.z)/2 );
+		//// Then the screen coords are the distances from the three planes
+		return new Vector3d(
+			this.vectorSide.x*(projection.x-this.x) + this.vectorSide.y*(projection.y-this.y) + this.vectorSide.z*(projection.z-this.z),
+			this.vectorUp.x*(projection.x-this.x) + this.vectorUp.y*(projection.y-this.y) + this.vectorUp.z*(projection.z-this.z),
+			// z = Depth
+			this.vectorFront.x*(projection.x-this.x) + this.vectorFront.y*(projection.y-this.y) + this.vectorFront.z*(projection.z-this.z)
+		)
 	}
 }
