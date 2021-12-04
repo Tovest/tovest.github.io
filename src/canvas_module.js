@@ -1,7 +1,8 @@
 export class Canvas {
-	constructor() {
+	constructor(canvasElement) {
 		this.selectableAreas = [];
 		this.elements2d = [];
+		this.canvasElement = canvasElement;
 	}
 	triggerHover(x,y) {
 		for (let i=0; i<this.selectableAreas.length; i++) {
@@ -10,6 +11,7 @@ export class Canvas {
 			}
 		}
 	}
+	canvasElement.onmouseover = function(e) {triggerHover(e.offsetX,e.offsetY)};
 	addSelectableArea(selectableArea) {
 		this.selectableAreas.push(selectableArea);
 	}
