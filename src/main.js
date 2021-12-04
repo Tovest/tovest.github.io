@@ -2,7 +2,7 @@ import { PointObj , LineObj , PolygonObj } from "./obj_module.js";
 import { Canvas } from "./canvas_module.js"
 import { Workplace } from "./workplace_module.js"
 import { CameraOrtho } from "./camera_module.js"
-import { SnapPoint } from "./entity_module"
+import { SnapPoint } from "./entity_module.js"
 
 console.log("v12");
 
