@@ -53,9 +53,9 @@ export class CameraOrtho extends Camera {
 	}
 	getScreenCoordsOfPoint(x,y,z) {
 		return new Vector3d(
-			this.vectorSide.x*(projection.x-this.x) + this.vectorSide.y*(projection.y-this.y) + this.vectorSide.z*(projection.z-this.z),
-			this.vectorUp.x*(projection.x-this.x) + this.vectorUp.y*(projection.y-this.y) + this.vectorUp.z*(projection.z-this.z),
-			this.vectorFront.x*(projection.x-this.x) + this.vectorFront.y*(projection.y-this.y) + this.vectorFront.z*(projection.z-this.z)
+			this.vectorSide.x*(x-this.x) + this.vectorSide.y*(y-this.y) + this.vectorSide.z*(z-this.z),
+			this.vectorUp.x*(x-this.x) + this.vectorUp.y*(y-this.y) + this.vectorUp.z*(z-this.z),
+			this.vectorFront.x*(x-this.x) + this.vectorFront.y*(y-this.y) + this.vectorFront.z*(z-this.z)
 		)
 	}
 }
