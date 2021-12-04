@@ -47,7 +47,7 @@ export class Camera {
 	}
 }
 
-export class CameraOrtho {
+export class CameraOrtho extends Camera {
 	constructor(x,y,z,yaw,pitch,roll) {
 		super(x,y,z,yaw,pitch,roll);
 	}
