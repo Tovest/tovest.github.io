@@ -11,7 +11,6 @@ export class Canvas {
 			}
 		}
 	}
-	console.log(this.canvasElement);
 	addSelectableArea(selectableArea) {
 		this.selectableAreas.push(selectableArea);
 	}
