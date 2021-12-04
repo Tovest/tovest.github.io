@@ -4,7 +4,7 @@ export class Canvas {
 		this.selectableAreas = [];
 		this.elements2d = [];
 		this.canvasElement = canvasElement;
-		this.canvasElement.onmouseover = function(e){this.triggerHover(e.offsetX,e.offsetY);};
+		this.canvasElement.onmouseover = this.triggerHoverEvent(e);
 	}
 	triggerHover(x,y) {
 		for (let i=0; i<this.selectableAreas.length; i++) {
@@ -13,6 +13,14 @@ export class Canvas {
 			}
 		}
 	}
+	triggerHoverEvent(e) {
+		for (let i=0; i<this.selectableAreas.length; i++) {
+			if (this.selectableAreas[i].area.containsPoint(e.offsetX,e.offsetY)) {
+				this.selectableAreas[i].notifyHover(e.offsetX,e.offsetY,this);
+			}
+		}
+	}
+	
 	addSelectableArea(selectableArea) {
 		this.selectableAreas.push(selectableArea);
 	}
