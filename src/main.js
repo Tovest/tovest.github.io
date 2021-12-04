@@ -9,7 +9,7 @@ console.log("v16");
 var what = 5;
 var point = new SnapPoint(0,20,0);
 var point2 = new SnapPoint(0,20,15);
-var canvas = new Canvas(document.getElementById("canvas"));
+var canvas = new Canvas("canvas");
 var workplace = new Workplace(new CameraOrtho(0,0,0,0,0,0), canvas);
 workplace.entityList.push(point);
 workplace.entityList.push(point2);
