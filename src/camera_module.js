@@ -11,7 +11,19 @@ function rotate(point,axis,angle) {
 }
 
 export class Camera {
-	updateAngles(yaw,pitch,roll) {
+	constructor(x,y,z,yaw,pitch,roll) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.yaw = undefined;
+		this.pitch = undefined;
+		this.roll = undefined;
+		this.vectorFront = undefined;
+		this.vectorSide = undefined;
+		this.vectorUp = undefined;
+		updateAngles(yaw,pitch,roll);
+	}
+	updateAngles = (yaw,pitch,roll) => {
 		this.yaw = yaw;
 		this.pitch = pitch;
 		this.roll = roll;
@@ -28,18 +40,6 @@ export class Camera {
 			(this.vectorSide.z*this.vectorFront.x)-(this.vectorSide.x*this.vectorFront.z),
 			(this.vectorSide.x*this.vectorFront.y)-(this.vectorSide.y*this.vectorFront.x)
 		);
-	}
-	constructor(x,y,z,yaw,pitch,roll) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.yaw = undefined;
-		this.pitch = undefined;
-		this.roll = undefined;
-		this.vectorFront = undefined;
-		this.vectorSide = undefined;
-		this.vectorUp = undefined;
-		updateAngles(yaw,pitch,roll);
 	}
 	getScreenCoordsOfPoint(x,y,z) {
 		console.log("This camera hasn't defined the getScreenCoordsOfVertex function")
