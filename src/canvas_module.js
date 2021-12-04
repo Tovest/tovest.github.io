@@ -1,11 +1,4 @@
 export class Canvas {
-	constructor(canvasElement) {
-		this.selectableAreas = [];
-		this.elements2d = [];
-		this.canvasElement = canvasElement;
-		var func = function(e) {this.triggerHover(e.offsetX,e.offsetY);};
-		this.canvasElement.onmouseover = func;
-	}
 	triggerHover(x,y) {
 		for (let i=0; i<this.selectableAreas.length; i++) {
 			if (this.selectableAreas[i].area.containsPoint(x,y)) {
@@ -13,6 +6,14 @@ export class Canvas {
 			}
 		}
 	}
+	constructor(canvasElement) {
+		this.selectableAreas = [];
+		this.elements2d = [];
+		this.canvasElement = canvasElement;
+		var func = function(e) {this.triggerHover(e.offsetX,e.offsetY);};
+		this.canvasElement.onmouseover = func;
+	}
+	
 	addSelectableArea(selectableArea) {
 		this.selectableAreas.push(selectableArea);
 	}
