@@ -13,4 +13,4 @@ var workplace = new Workplace(new CameraOrtho(0,0,0,0,0,0), canvas);
 workplace.entityList.push(point);
 console.log(workplace);
 workplace.render();
-canvas.triggerHover(5,5);
+canvas.triggerHover(5,6);
