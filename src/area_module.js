@@ -69,10 +69,11 @@ export class TriangleArea extends AreaBase {
 		this.y3 = y3;
 	}
 	containsPoint(x,y) {
-		return
+		return (
 			( sideOfLineUnormalized(this.x1,this.y1,this.x2,this.y2,x,y) >= 0 ) ==
 			( sideOfLineUnormalized(this.x2,this.y2,this.x3,this.y3,x,y) >= 0 ) ==
 			( sideOfLineUnormalized(this.x3,this.y3,this.x1,this.y1,x,y) >= 0 )
+		);
 	}
 	getCorrispondingPoint(x,y) {
 		return new Vector2d(x,y);
