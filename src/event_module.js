@@ -8,7 +8,7 @@ export class Event {
 	}
 }
 
-export class EventAddSprite extends event {
+export class EventAddSprite extends Event {
 	constructor(image) {
 		this.image = image;
 	}
@@ -17,7 +17,7 @@ export class EventAddSprite extends event {
 	}
 }
 
-export class EventConsoleLog extends event {
+export class EventConsoleLog extends Event {
 	constructor(message) {
 		this.message = message;
 	}
