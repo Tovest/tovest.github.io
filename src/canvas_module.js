@@ -5,7 +5,6 @@ export class Canvas {
 		this.canvasElement = canvasElement;
 		var func = function(e) {this.triggerHover(e.offsetX,e.offsetY);};
 		this.canvasElement.onmouseover = func;
-		};
 	}
 	triggerHover(x,y) {
 		for (let i=0; i<this.selectableAreas.length; i++) {
