@@ -33,7 +33,3 @@ console.log(0,18)
 canvas.triggerHover(0,18);
 console.log(0,21)
 canvas.triggerHover(0,21);
-
-function testHover(x,y) {
-	canvas.triggerHover(x,y);
-}
