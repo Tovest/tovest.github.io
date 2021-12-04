@@ -23,7 +23,7 @@ export class Camera {
 		this.vectorUp = undefined;
 		this.updateAngles(yaw,pitch,roll);
 	}
-	updateAngles = (yaw,pitch,roll) => {
+	updateAngles(yaw,pitch,roll) {
 		this.yaw = yaw;
 		this.pitch = pitch;
 		this.roll = roll;
