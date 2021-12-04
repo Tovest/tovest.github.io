@@ -3,14 +3,14 @@ import { PointArea } from "./area_module.js"
 import { SelectableArea } from "./selectableArea_module.js"
 import { Vector3d } from "./vector.js"
 
-export class entity {
+export class Entity {
 	constructor() {}
 	translateToCanvas(camera,canvas) {
 		//ToDo, this should setup canvas with elements2d and selectable areas.
 		return;
 	}
 }
-export class snapPoint extends entity {
+export class SnapPoint extends Entity {
 	constructor(x,y,z) {
 		this.point = new PointObj(x,y,z);
 	}
