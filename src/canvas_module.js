@@ -1,9 +1,9 @@
 export class Canvas {
 	
-	constructor(canvasElement) {
+	constructor(canvasElementId) {
 		this.selectableAreas = [];
 		this.elements2d = [];
-		this.canvasElement = canvasElement;
+		this.canvasElement = document.getElementById(canvasElementId);
 		this.func = function(e) {
 			for (let i=0; i<this.selectableAreas.length; i++) {
 				if (this.selectableAreas[i].area.containsPoint(e.offsetX,e.offsetY)) {
