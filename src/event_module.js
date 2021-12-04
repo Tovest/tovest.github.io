@@ -10,6 +10,7 @@ export class Event {
 
 export class EventAddSprite extends Event {
 	constructor(image) {
+		super();
 		this.image = image;
 	}
 	execute(requestingArea,x,y,canvas) {
@@ -19,6 +20,7 @@ export class EventAddSprite extends Event {
 
 export class EventConsoleLog extends Event {
 	constructor(message) {
+		super();
 		this.message = message;
 	}
 	execute(requestingArea,x,y,canvas) {
