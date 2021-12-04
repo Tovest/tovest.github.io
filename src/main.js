@@ -4,7 +4,7 @@ import { Workplace } from "./workplace_module.js"
 import { CameraOrtho } from "./camera_module.js"
 import { SnapPoint } from "./entity_module.js"
 
-console.log("v13");
+console.log("v15");
 
 var what = 5;
 var point = new SnapPoint(0,20,0);
@@ -29,5 +29,11 @@ console.log(0,10)
 canvas.triggerHover(0,10);
 console.log(0,14)
 canvas.triggerHover(0,14);
+console.log(0,18)
+canvas.triggerHover(0,18);
 console.log(0,21)
 canvas.triggerHover(0,21);
+
+function(x,y) {
+	canvas.triggerHover(x,y);
+}
