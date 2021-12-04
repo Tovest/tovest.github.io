@@ -11,7 +11,7 @@ export class Canvas {
 			}
 		}
 	}
-	this.canvasElement.onmouseover = function(e) {console.log("test",e.offsetX)};
+	console.log(this.canvasElement);
 	addSelectableArea(selectableArea) {
 		this.selectableAreas.push(selectableArea);
 	}
