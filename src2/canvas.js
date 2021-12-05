@@ -6,6 +6,8 @@ class Canvas {
 		this.activeCamera = camera;
 	}
 	render(entityList) {
+		this.selectableAreas = [];
+		this.elements2d = [];
 		for (var i=0; i<entityList.length; i++) {
 			entityList[i].translateToCanvas(this.activeCamera,this);
 		}
