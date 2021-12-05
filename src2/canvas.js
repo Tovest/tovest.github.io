@@ -3,4 +3,8 @@ class Canvas {
 		this.canvasElement = canvasElement;
 		this.activeCamera = camera;
 	}
+	render(entityList) {
+		for (let entity in entityList) {
+		}
+	}
 }
