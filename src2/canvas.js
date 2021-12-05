@@ -4,7 +4,8 @@ class Canvas {
 		this.activeCamera = camera;
 	}
 	render(entityList) {
-		for (let entity in entityList) {
+		for (var entity in entityList) {
+			entity.translateToCanvas(this.activeCamera,this);
 		}
 	}
 }
