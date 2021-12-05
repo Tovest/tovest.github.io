@@ -11,6 +11,7 @@ class SnapPoint extends Entity {
 		this.point = new VertexEdge(x,y,z);
 	}
 	translateToCanvas(camera,canvas) {
+		console.log("gotHere translateToCanvas");
 		var coords = camera.getScreenCoordsOfVertex(this.point);
 		var selectableArea = new SelectableArea(new PointArea(coords.x,coords.y,5));
 		selectableArea.onHover = new EventConsoleLog("Hovering Snap Point");
