@@ -1,6 +1,6 @@
 class Workplace {
-	constructor(world,canvas) {
-		this.world = world;
+	constructor(entityList,canvas) {
+		this.entityList = entityList;
 		this.canvas = canvas;
 	}
 }
