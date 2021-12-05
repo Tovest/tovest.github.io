@@ -39,7 +39,7 @@ class Camera {
 			(this.vectorSide.x*this.vectorFront.y)-(this.vectorSide.y*this.vectorFront.x)
 		);
 	}
-	getScreenCoordsOfPoint(x,y,z) {
+	getScreenCoordsOfVertex(vertex) {
 		console.log("This camera hasn't defined the getScreenCoordsOfVertex function")
 		return new Vector3d(0,0,0);
 	}
@@ -49,11 +49,11 @@ class CameraOrtho extends Camera {
 	constructor(x,y,z,yaw,pitch,roll) {
 		super(x,y,z,yaw,pitch,roll);
 	}
-	getScreenCoordsOfPoint(x,y,z) {
+	getScreenCoordsOfVertex(v) {
 		return new Vector3d(
-			this.vectorSide.x*(x-this.x) + this.vectorSide.y*(y-this.y) + this.vectorSide.z*(z-this.z),
-			this.vectorUp.x*(x-this.x) + this.vectorUp.y*(y-this.y) + this.vectorUp.z*(z-this.z),
-			this.vectorFront.x*(x-this.x) + this.vectorFront.y*(y-this.y) + this.vectorFront.z*(z-this.z)
+			this.vectorSide.x*(v.x-this.x) + this.vectorSide.y*(v.y-this.y) + this.vectorSide.z*(v.z-this.z),
+			this.vectorUp.x*(v.x-this.x) + this.vectorUp.y*(v.y-this.y) + this.vectorUp.z*(v.z-this.z),
+			this.vectorFront.x*(v.x-this.x) + this.vectorFront.y*(v.y-this.y) + this.vectorFront.z*(v.z-this.z)
 		)
 	}
 }
