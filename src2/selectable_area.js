@@ -1,4 +1,4 @@
-export class SelectableArea {
+class SelectableArea {
 	constructor(area) {
 		this.area = area;
 		this.onHover = undefined;
