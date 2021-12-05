@@ -17,16 +17,16 @@ class Canvas {
 		this.element2d.push(element2d);
 	}
 	triggerHover(x,y) {
-		for (var selectableArea in this.selectableAreas) {
-			if (selectableArea.area.containsPoint(x,y)) {
-				selectableArea.notifyHover(x,y,this);
+		for (var i in this.selectableAreas) {
+			if (selectableAreas[i].area.containsPoint(x,y)) {
+				selectableAreas[i].notifyHover(x,y,this);
 			}
 		}
 	}
 	triggerClick(x,y) {
-		for (var selectableArea in this.selectableAreas) {
-			if (selectableArea.area.containsPoint(x,y)) {
-				selectableArea.notifyClick(x,y,this);
+		for (var i in this.selectableAreas) {
+			if (selectableAreas[i].area.containsPoint(x,y)) {
+				selectableAreas[i].notifyClick(x,y,this);
 			}
 		}
 	}
