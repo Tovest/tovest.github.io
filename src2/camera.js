@@ -50,6 +50,7 @@ class CameraOrtho extends Camera {
 		super(x,y,z,yaw,pitch,roll);
 	}
 	getScreenCoordsOfVertex(v) {
+		console.log("gotHere getScreenCoordsOfVertex");
 		return new Vector3d(
 			this.vectorSide.x*(v.x-this.x) + this.vectorSide.y*(v.y-this.y) + this.vectorSide.z*(v.z-this.z),
 			this.vectorUp.x*(v.x-this.x) + this.vectorUp.y*(v.y-this.y) + this.vectorUp.z*(v.z-this.z),
