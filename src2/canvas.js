@@ -25,8 +25,8 @@ class Canvas {
 	}
 	triggerClick(x,y) {
 		for (var i=0; i<this.selectableAreas.length; i++) {
-			if (selectableAreas[i].area.containsPoint(x,y)) {
-				selectableAreas[i].notifyClick(x,y,this);
+			if (this.selectableAreas[i].area.containsPoint(x,y)) {
+				this.selectableAreas[i].notifyClick(x,y,this);
 			}
 		}
 	}
