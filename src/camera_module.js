@@ -1,5 +1,3 @@
-import { Vector3d } from "./vector.js"
-
 function rotate(point,axis,angle) {
 	var s = Math.sin(angle/2);
 	var c = Math.cos(angle/2);
