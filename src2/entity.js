@@ -8,7 +8,7 @@ class Entity {
 class SnapPoint extends Entity {
 	constructor(x,y,z) {
 		super();
-		this.point = new Point(x,y,z);
+		this.point = new VertexEdge(x,y,z);
 	}
 	translateToCanvas(camera,canvas) {
 		var coords = camera.getScreenCoordsOfVertex(this.point.x,this.point.y,this.point.z);
