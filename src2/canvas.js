@@ -6,7 +6,7 @@ class Canvas {
 		this.activeCamera = camera;
 	}
 	render(entityList) {
-		for (var i in this.entityList) {
+		for (var i=0; i<this.entityList.length; i++) {
 			entityList[i].translateToCanvas(this.activeCamera,this);
 		}
 	}
