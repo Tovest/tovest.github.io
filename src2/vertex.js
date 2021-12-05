@@ -6,8 +6,8 @@ class Vertex {
 		this.observers = [];
 	}
 	notifyObservers() {
-		for (observer in this.observers) {
-			observer.updateSelf();
+		for (var i in this.observers) {
+			observers[i].updateSelf();
 		}
 	};
 	updateSelf() {};
