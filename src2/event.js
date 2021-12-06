@@ -1,6 +1,6 @@
 class Event {
 	constructor() {}
-	execute(requestingArea,x,y,canvas) {
+	execute(requestingArea,vertex,canvas) {
 		return;
 	}
 }
@@ -10,7 +10,7 @@ class EventConsoleLog extends Event {
 		super();
 		this.message = message;
 	}
-	execute(requestingArea,x,y,canvas) {
-		console.log(this.message,x,y);
+	execute(requestingArea,vertex,canvas) {
+		console.log(this.message,vertex.x,vertex.y);
 	}
 }
