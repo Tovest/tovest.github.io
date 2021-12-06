@@ -20,8 +20,6 @@ class SelectableArea {
 	getCorrispondingPoint(x,y) {
 		return undefined;
 	}
-	executeOnHover(x,y,canvas) {}
-	executeOnClick(x,y,canvas) {}
 }
 
 class PointArea extends SelectableArea {
@@ -38,12 +36,6 @@ class PointArea extends SelectableArea {
 	}
 	getCorrispondingVertex(x,y) {
 		return this.corrispongingVertex;
-	}
-	executeOnHover(x,y,canvas) {
-		if (this.containsPoint(x,y)) this.onHover.execute(this,this.corrispongingVertex,canvas);
-	}
-	executeOnClick(x,y,canvas) {
-		if (this.containsPoint(x,y)) this.onClick.execute(this,this.corrispongingVertex,canvas);
 	}
 }
 
@@ -68,12 +60,6 @@ class LineArea extends SelectableArea {
 	}
 	getCorrispondingPoint(x,y) {
 		return undefined; //ToDo
-	}
-	executeOnHover(x,y,canvas) {
-		if (this.containsPoint(x,y)) this.onHover.execute(this,new VertexMidpoint(this.corrispongingVertex1,this.corrispongingVertex2),canvas);
-	}
-	executeOnClick(x,y,canvas) {
-		if (this.containsPoint(x,y)) this.onClick.execute(this,new VertexMidpoint(this.corrispongingVertex1,this.corrispongingVertex2),canvas);
 	}
 }
 
