@@ -53,6 +53,7 @@ class VertexMidpoint extends Vertex {
 
 class VertexLinePoint extends Vertex {
 	constructor(v1,v2,proportion) {
+		this.proportion = proportion;
 		super( (v1.x+v2.x)*proportion , (v1.y+v2.y)*proportion , (v1.z+v2.z)*proportion );
 		v1.observers.push(this);
 		v2.observers.push(this);
