@@ -11,6 +11,7 @@ class Canvas {
 		for (var i=0; i<entityList.length; i++) {
 			entityList[i].translateToCanvas(this.activeCamera,this);
 		}
+		//// this.triggerHover(x,y);
 	}
 	addSelectableArea(selectableArea) {
 		this.selectableAreas.push(selectableArea);
