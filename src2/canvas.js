@@ -21,14 +21,14 @@ class Canvas {
 	triggerHover(x,y) {
 		for (var i=0; i<this.selectableAreas.length; i++) {
 			if (this.selectableAreas[i].area.containsPoint(x,y)) {
-				this.selectableAreas[i].notifyHover(x,y,this);
+				this.selectableAreas[i].executeOnHover(x,y,this);
 			}
 		}
 	}
 	triggerClick(x,y) {
 		for (var i=0; i<this.selectableAreas.length; i++) {
 			if (this.selectableAreas[i].area.containsPoint(x,y)) {
-				this.selectableAreas[i].notifyClick(x,y,this);
+				this.selectableAreas[i].executeOnClick(x,y,this);
 			}
 		}
 	}
