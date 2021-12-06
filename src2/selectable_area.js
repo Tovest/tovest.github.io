@@ -58,7 +58,7 @@ class LineArea extends SelectableArea {
 		    Math.abs((this.y1-this.y2)*((this.y1+this.y2)/2.0-y)-(this.x1-this.x2)*((this.x1+this.x2)/2.0-x))/length;
 		return (distanceFromLine <= this.width && distanceFromPerpendicularBisector <= length/2.0);
 	}
-	getCorrispondingPoint(x,y) {
+	getCorrispondingVertex(x,y) {
 		return undefined; //ToDo
 	}
 }
@@ -80,7 +80,7 @@ class TrisArea extends SelectableArea {
 			( sideOfLineUnormalized(this.x3,this.y3,this.x1,this.y1,x,y) >= 0 )
 		);
 	}
-	getCorrispondingPoint(x,y) {
+	getCorrispondingVertex(x,y) {
 		return new Vector2d(x,y);
 	}
 }
