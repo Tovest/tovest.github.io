@@ -11,6 +11,6 @@ class EventConsoleLog extends Event {
 		this.message = message;
 	}
 	execute(requestingArea,vertex,canvas) {
-		console.log(this.message,vertex.x,vertex.y);
+		console.log(this.message,vertex.x,vertex.y,vertex.z);
 	}
 }
