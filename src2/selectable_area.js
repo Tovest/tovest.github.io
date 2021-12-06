@@ -81,6 +81,6 @@ class TrisArea extends SelectableArea {
 		);
 	}
 	getCorrispondingVertex(x,y) {
-		return new Vector2d(x,y);
+		return undefined; //ToDO
 	}
 }
