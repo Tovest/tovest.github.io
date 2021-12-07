@@ -17,7 +17,7 @@ class SelectableArea {
 	containsPoint(x,y) {
 		return false;
 	}
-	getCorrispondingPoint(x,y) {
+	getCorrispondingVertex(x,y) {
 		return undefined;
 	}
 }
