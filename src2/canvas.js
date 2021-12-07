@@ -9,7 +9,7 @@ class Canvas {
 		this.selectableAreas = [];
 		this.elements2d = [];
 		for (var i=0; i<entityList.length; i++) {
-			entityList[i].translateToCanvas(this.activeCamera,this);
+			entityList[i].translateToCanvas(this);
 		}
 		//// this.triggerHover(x,y);
 	}
