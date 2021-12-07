@@ -10,7 +10,7 @@ function sideOfLineUnormalized(x1,y1,x2,y2,x3,y3) {
 }
 
 class SelectableArea {
-	constructor(area) {
+	constructor() {
 		this.onHover = undefined;
 		this.onClick = undefined;
 	}
@@ -25,17 +25,17 @@ class SelectableArea {
 class PointArea extends SelectableArea {
 	constructor(vertex,radius) {
 		super();
-		this.centerX = x;
-		this.centerY = y;
+		this.vertex = vertex;
+		this.centerX = undefined;
+		this.centerY = undefined;
 		this.radius = radius;
-		this.corrispongingVertex = corrispongingVertex;
 	}
 	containsPoint(x,y) {
 		var dist = distance(this.centerX,this.centerY,x,y);
 		return (dist <= this.radius);
 	}
 	getCorrispondingVertex(x,y) {
-		return this.corrispongingVertex;
+		return this.vertex;
 	}
 }
 
