@@ -9,13 +9,12 @@ class SnapPoint extends Entity {
 	constructor(x,y,z) {
 		super();
 		this.point = new VertexEdge(x,y,z);
+		this.selecrableArea = new PointArea(this.point,5);
+		this.selectableArea.onHover = new EventConsoleLog("Hovering Snap Point"); //new EventAddSprite
+		this.selectableArea.onClick = new EventConsoleLog("Clicked Snap Point"); //new EventReturnCorrispondingVertex
 	}
-	translateToCanvas(camera,canvas) {
-		var screenCoords = camera.getScreenCoordsOfVertex(this.point);
-		var selectableArea = new PointArea(screenCoords.x,screenCoords.y,5,this.point);
-		selectableArea.onHover = new EventConsoleLog("Hovering Snap Point"); //new EventAddSprite
-		selectableArea.onClick = new EventConsoleLog("Clicked Snap Point"); //new EventReturnCorrispondingVertex
-		canvas.addSelectableArea(selectableArea);
+	translateToCanvas(canvas) {
+		canvas.addSelectableArea(this.selectableArea.positionOnCanvas(canvas));
 	}
 }
 
@@ -26,7 +25,7 @@ class Line extends Entity {
 		this.endpoint2 = new VertexEdge(x2,y2,z2);
 		this.middlepoint = new VertexMidpoint(this.endpoint1,this.endpoint2);
 	}
-	translateToCanvas(camera,canvas) {
+	translateToCanvas(canvas) {
 		var screenCoordsEndpoint1 = camera.getScreenCoordsOfVertex(this.endpoint1);
 		var screenCoordsEndpoint2 = camera.getScreenCoordsOfVertex(this.endpoint2);
 		var selectableAreaEndpoint1 = new PointArea(screenCoordsEndpoint1.x,screenCoordsEndpoint1.y,5,this.endpoint1);
