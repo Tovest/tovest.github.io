@@ -23,7 +23,7 @@ class SelectableArea {
 }
 
 class PointArea extends SelectableArea {
-	constructor(x,y,radius,corrispongingVertex) {
+	constructor(vertex,radius) {
 		super();
 		this.centerX = x;
 		this.centerY = y;
