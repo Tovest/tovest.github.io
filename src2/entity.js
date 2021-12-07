@@ -31,8 +31,15 @@ class Line extends Entity {
 		this.endpointVertex2 = endpointVertex2;
 		this.selectableArea = new LineArea(this.endpointVertex1,this.endpointVertex2);
 		this.selectableArea.onHover = new EventConsoleLog("Hovering Line"); //new EventAddSprite
-		this.selectableArea.onClick = new EventConsoleLog("Clicked Line"); //new EventRespondWithVertex
+		this.selectableArea.onClick = new EventConsoleLog("Clicked Line"); //new EventAddNewLinePoint
 	}
 	translateToCanvas(canvas) {
+		var screenCoordsEndpoint1 = canvas.camera.getScreenCoordsOfVertex(this.endpointVertex1);
+		var screenCoordsEndpoint2 = canvas.camera.getScreenCoordsOfVertex(this.endpointVertex2);
+		this.selectableArea.x1 = screenCoordsEndpoint1.x;
+		this.selectableArea.y1 = screenCoordsEndpoint1.y;
+		this.selectableArea.x2 = screenCoordsEndpoint2.x;
+		this.selectableArea.y2 = screenCoordsEndpoint2.y;
+		canvas.addSelectableArea(this.selectableArea);
 	}
 }
