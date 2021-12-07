@@ -3,7 +3,7 @@ class Canvas {
 		this.selectableAreas = [];
 		this.elements2d = [];
 		this.canvasElement = canvasElement;
-		this.activeCamera = camera;
+		this.camera = camera;
 	}
 	render(entityList) {
 		this.selectableAreas = [];
