@@ -37,20 +37,6 @@ class VertexEdge extends Vertex {
 	}
 }
 
-class VertexMidpoint extends Vertex {
-	constructor(v1,v2) {
-		super( (v1.x+v2.x)/2 , (v1.y+v2.y)/2 , (v1.z+v2.z)/2 );
-		v1.observers.push(this);
-		v2.observers.push(this);
-	}
-	updateSelf() {
-		this.x = (v1.x+v2.x)/2;
-		this.y = (v1.y+v2.y)/2;
-		this.z = (v1.z+v2.z)/2;
-		this.notifyObservers();
-	}
-}
-
 class VertexLinePoint extends Vertex {
 	constructor(v1,v2,proportion) {
 		this.proportion = proportion;
