@@ -17,38 +17,28 @@ class SelectableArea {
 	containsPoint(x,y) {
 		return false;
 	}
-	getCorrispondingVertex(x,y) {
-		return undefined;
-	}
 }
 
 class PointArea extends SelectableArea {
-	constructor(vertex,radius) {
+	constructor(radius) {
 		super();
-		this.vertex = vertex;
-		this.centerX = undefined;
-		this.centerY = undefined;
+		this.x = undefined;
+		this.y = undefined;
 		this.radius = radius;
 	}
 	containsPoint(x,y) {
-		var dist = distance(this.centerX,this.centerY,x,y);
-		return (dist <= this.radius);
-	}
-	getCorrispondingVertex(x,y) {
-		return this.vertex;
+		return ( distance(this.x,this.y,x,y) <= this.radius );
 	}
 }
 
 class LineArea extends SelectableArea {
-	constructor(x1,y1,x2,y2,width,corrispongingVertex1,corrispongingVertex2) {
+	constructor(width) {
 		super();
-		this.x1 = x1;
-		this.y1 = y1;
-		this.x2 = x2;
-		this.y2 = y2;
+		this.x1 = undefined;
+		this.y1 = undefined;
+		this.x2 = undefined;
+		this.y2 = undefined;
 		this.width = width;
-		this.corrispongingVertex1 = corrispongingVertex1;
-		this.corrispongingVertex2 = corrispongingVertex2;
 	}
 	containsPoint(x,y) {
 		var length = distance(this.x1,this.y1,this.x2,this.y2);
@@ -58,20 +48,17 @@ class LineArea extends SelectableArea {
 		    Math.abs((this.y1-this.y2)*((this.y1+this.y2)/2.0-y)-(this.x1-this.x2)*((this.x1+this.x2)/2.0-x))/length;
 		return (distanceFromLine <= this.width && distanceFromPerpendicularBisector <= length/2.0);
 	}
-	getCorrispondingVertex(x,y) {
-		return undefined; //ToDo
-	}
 }
 
 class TrisArea extends SelectableArea {
-	constructor(x1,y1,x2,y2,x3,y3) {
+	constructor() {
 		super();
-		this.x1 = x1;
-		this.y1 = y1;
-		this.x2 = x2;
-		this.y2 = y2;
-		this.x3 = x3;
-		this.y3 = y3;
+		this.x1 = undefined;
+		this.y1 = undefined;
+		this.x2 = undefined;
+		this.y2 = undefined;
+		this.x3 = undefined;
+		this.y3 = undefined;
 	}
 	containsPoint(x,y) {
 		return (
@@ -79,8 +66,5 @@ class TrisArea extends SelectableArea {
 			( sideOfLineUnormalized(this.x2,this.y2,this.x3,this.y3,x,y) >= 0 ) ==
 			( sideOfLineUnormalized(this.x3,this.y3,this.x1,this.y1,x,y) >= 0 )
 		);
-	}
-	getCorrispondingVertex(x,y) {
-		return undefined; //ToDO
 	}
 }
