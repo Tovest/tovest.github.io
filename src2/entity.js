@@ -6,33 +6,33 @@ class Entity {
 }
 
 class SnapPoint extends Entity {
-	constructor(x,y,z) {
+	constructor(vertex) {
 		super();
-		this.point = new VertexEdge(x,y,z);
-		this.selecrableArea = new PointArea(this.point,5);
+		this.vertex = vertex;
+		this.selectableArea = new PointArea(this.vertex,5);
 		this.selectableArea.onHover = new EventConsoleLog("Hovering Snap Point"); //new EventAddSprite
-		this.selectableArea.onClick = new EventConsoleLog("Clicked Snap Point"); //new EventReturnCorrispondingVertex
+		this.selectableArea.onClick = new EventConsoleLog("Clicked Snap Point"); //new EventRespondWithVertex(this.point)
+	}
+	static create(x,y,z) {
+		return new SnapPoint(new VertexEdge(x,y,z));
 	}
 	translateToCanvas(canvas) {
-		canvas.addSelectableArea(this.selectableArea.positionOnCanvas(canvas));
+		var screenCoords = canvas.camera.getScreenCoordsOfVertex(this.vertex);
+		this.selectableArea.x = screenCoords.x;
+		this.selectableArea.y = screenCoords.y;
+		canvas.addSelectableArea(this.selectableArea);
 	}
 }
 
 class Line extends Entity {
-	constructor(x1,y1,z1,x2,y2,z2) {
+	constructor(endpointVertex1,endpointVertex2) {
 		super();
-		this.endpoint1 = new VertexEdge(x1,y1,z1);
-		this.endpoint2 = new VertexEdge(x2,y2,z2);
-		this.middlepoint = new VertexMidpoint(this.endpoint1,this.endpoint2);
+		this.endpointVertex1 = endpointVertex1;
+		this.endpointVertex2 = endpointVertex2;
+		this.selectableArea = new LineArea(this.endpointVertex1,this.endpointVertex2);
+		this.selectableArea.onHover = new EventConsoleLog("Hovering Line"); //new EventAddSprite
+		this.selectableArea.onClick = new EventConsoleLog("Clicked Line"); //new EventRespondWithVertex
 	}
 	translateToCanvas(canvas) {
-		var screenCoordsEndpoint1 = camera.getScreenCoordsOfVertex(this.endpoint1);
-		var screenCoordsEndpoint2 = camera.getScreenCoordsOfVertex(this.endpoint2);
-		var selectableAreaEndpoint1 = new PointArea(screenCoordsEndpoint1.x,screenCoordsEndpoint1.y,5,this.endpoint1);
-		var selectableAreaEndpoint2 = new PointArea(screenCoordsEndpoint2.x,screenCoordsEndpoint2.y,5,this.endpoint2);
-		selectableArea.onHover = new EventConsoleLog("Hovering Snap Point"); //new EventAddSelectableArea
-		selectableArea.onClick = new EventConsoleLog("Clicked Snap Point"); //new EventAddVertex
-		var selecrableAreaLine = new LineArea(screenCoordsEndpoint1.x, screenCoordsEndpoint1.y, screenCoordsEndpoint2.x, screenCoordsEndpoint2.y, 5)
-		canvas.addSelectableArea(selectableArea);
 	}
 }
