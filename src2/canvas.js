@@ -37,7 +37,9 @@ class Canvas {
 			}
 		}
 	}
-	clear();
+	clear() {
+		console.log("This canvas can't clear itself");
+	}
 	drawPoint(point) {
 		console.log("This canvas can't draw Points");
 	}
