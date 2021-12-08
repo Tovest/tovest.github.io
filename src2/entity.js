@@ -30,7 +30,7 @@ class Line extends Entity {
 		this.endpointVertex1 = endpointVertex1;
 		this.endpointVertex2 = endpointVertex2;
 		this.selectableArea = new LineArea(5);
-		this.selectableArea.onHover = new EventConsoleLog("Hovering Line"); //new EventAddSprite
+		this.selectableArea.onHover = new EventConsoleLog("Hovering Line"); //new EventAddSprite and EventAddSelectableArea which when clicked EventRespondWithVertex...?
 		this.selectableArea.onClick = new EventConsoleLog("Clicked Line"); //new EventAddNewLinePoint
 	}
 	translateToCanvas(canvas) {
