@@ -1,7 +1,7 @@
 class Canvas {
 	constructor(canvasID,camera) {
 		this.canvasElement = document.getElementById(canvasID);
-		this.canvasElement.onmouseover = function(e) {this.triggerHover(e.offsetX,e.offsetY);};
+		this.canvasElement.onmouseover = this.triggerHoverEvent;
 		this.camera = camera;
 		this.selectableAreas = [];
 		this.drawingElements = [];
@@ -23,6 +23,9 @@ class Canvas {
 	}
 	addDrawingElement(drawingElement) {
 		this.drawingElements.push(drawingElement);
+	}
+	triggerHoverEvent(e) {
+		this.triggerHover(e.offsetX,e.offsetY);
 	}
 	triggerHover(x,y) {
 		for (var i=0; i<this.selectableAreas.length; i++) {
