@@ -6,6 +6,9 @@ class Canvas {
 		this.drawingElements = [];
 	}
 	render(entityList) {
+		this.selectableAreas = [];
+		this.drawingElements = [];
+		this.clear();
 		for (var i=0; i<entityList.length; i++) {
 			entityList[i].translateToCanvas(this);
 		}
@@ -34,6 +37,7 @@ class Canvas {
 			}
 		}
 	}
+	clear();
 	drawPoint(point) {
 		console.log("This canvas can't draw Points");
 	}
@@ -49,6 +53,10 @@ class Canvas2d extends Canvas {
 	constructor(canvasID,camera) {
 		super(canvasID,camera);
 		this.ctx = this.canvasElement.getContext("2d");
+	}
+	clear() {
+		this.ctx.fillStyle = "#FFFFFF";
+		this.ctx.fillRect(0,0,this.canvasElement.width,this.canvasElement.height);
 	}
 	drawPoint(point) {
 		var w = this.canvasElement.width/2;
