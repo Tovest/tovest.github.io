@@ -73,6 +73,7 @@ class Canvas2d extends Canvas {
 		var w = this.canvasElement.width/2;
 		var h = this.canvasElement.height/2;
 		this.ctx.beginPath();
+		this.ctx.lineWidth = 3;
 		this.ctx.moveTo(w+line.x1, h-line.y1);
 		this.ctx.lineTo(w+line.x2, h-line.y2);
 		this.ctx.closePath();
