@@ -15,7 +15,7 @@ class SnapPointEntity extends Entity {
 		this.drawingElement = new PointDrawing(0,0,0,"#FF0000");
 	}
 	static create(x,y,z) {
-		return new SnapPoint(new VertexEdge(x,y,z));
+		return new SnapPointEntity(new VertexEdge(x,y,z));
 	}
 	translateToCanvas(canvas) {
 		var screenCoords = canvas.camera.getScreenCoordsOfVertex(this.vertex);
