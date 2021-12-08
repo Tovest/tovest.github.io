@@ -19,20 +19,17 @@ class Camera {
 		this.vectorFront = undefined;
 		this.vectorSide = undefined;
 		this.vectorUp = undefined;
-		this.updateAngles(yaw,pitch,roll);
+		this.updateVectors();
 	}
-	updateAngles(yaw,pitch,roll) {
-		this.yaw = yaw;
-		this.pitch = pitch;
-		this.roll = roll;
-		var sy = Math.sin(yaw/2);
-		var cy = Math.cos(yaw/2);
-		var sy2 = Math.sin((yaw-(Math.PI/2))/2);
-		var cy2 = Math.cos((yaw-(Math.PI/2))/2);
+	updateVectors() {
+		var sy = Math.sin(this.yaw/2);
+		var cy = Math.cos(this.yaw/2);
+		var sy2 = Math.sin((this.yaw-(Math.PI/2))/2);
+		var cy2 = Math.cos((this.yaw-(Math.PI/2))/2);
 		this.vectorFront = new Vector3d(-2*cy*sy,cy*cy-sy*sy,0);
 		this.vectorSide = new Vector3d(-2*cy2*sy2,cy2*cy2-sy2*sy2,0);
-		this.vectorFront = rotate(this.vectorFront,this.vectorSide,pitch);
-		this.vectorSide = rotate(this.vectorSide,this.vectorFront,roll);
+		this.vectorFront = rotate(this.vectorFront,this.vectorSide,this.pitch);
+		this.vectorSide = rotate(this.vectorSide,this.vectorFront,this.roll);
 		this.vectorUp = new Vector3d(
 			(this.vectorSide.y*this.vectorFront.z)-(this.vectorSide.z*this.vectorFront.y),
 			(this.vectorSide.z*this.vectorFront.x)-(this.vectorSide.x*this.vectorFront.z),
