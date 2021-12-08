@@ -54,7 +54,7 @@ class Canvas2d extends Canvas {
 		var w = this.canvasElement.width/2;
 		var h = this.canvasElement.height/2;
 		this.ctx.fillStyle = point.color;
-		this.ctx.fillRect(w+point.x-2, h+point.y-2, w+point.x+2, h+point.y+2);
+		this.ctx.fillRect(w+point.x-0.01, h+point.y-0.01, w+point.x+0.01, h+point.y+0.01);
 	}
 	drawLine(line) {
 		var w = this.canvasElement.width/2;
