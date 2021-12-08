@@ -3,6 +3,7 @@ class Canvas {
 		this.canvasElement = document.getElementById(canvasID);
 		this.canvasElement.handler = this;
 		this.canvasElement.onmouseover = function(e) {e.target.handler.triggerHover(e.offsetX,e.offsetY)};
+		this.canvasElement.onclick = function(e) {e.target.handler.triggerClick(e.offsetX,e.offsetY)};
 		this.camera = camera;
 		this.selectableAreas = [];
 		this.drawingElements = [];
@@ -27,14 +28,14 @@ class Canvas {
 	}
 	triggerHover(x,y) {
 		for (var i=0; i<this.selectableAreas.length; i++) {
-			if (this.selectableAreas[i].containsPoint(x,y)) {
+			if (this.selectableAreas[i].containsPoint(x+this.canvasElement.width/2,y+this.canvasElement.height/2)) {
 				this.selectableAreas[i].onHover.execute();
 			}
 		}
 	}
 	triggerClick(x,y) {
 		for (var i=0; i<this.selectableAreas.length; i++) {
-			if (this.selectableAreas[i].containsPoint(x,y)) {
+			if (this.selectableAreas[i].containsPoint(x+this.canvasElement.width/2,y+this.canvasElement.height/2)) {
 				this.selectableAreas[i].onClick.execute();
 			}
 		}
