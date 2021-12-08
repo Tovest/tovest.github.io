@@ -12,6 +12,7 @@ class SnapPoint extends Entity {
 		this.selectableArea = new PointArea(5);
 		this.selectableArea.onHover = new EventConsoleLog("Hovering Snap Point"); //new EventAddSprite
 		this.selectableArea.onClick = new EventConsoleLog("Clicked Snap Point"); //new EventRespondWithVertex(this.point)
+		this.drawingElement = new Point(0,0,0,"#FF0000");
 	}
 	static create(x,y,z) {
 		return new SnapPoint(new VertexEdge(x,y,z));
@@ -21,6 +22,10 @@ class SnapPoint extends Entity {
 		this.selectableArea.x = screenCoords.x;
 		this.selectableArea.y = screenCoords.y;
 		canvas.addSelectableArea(this.selectableArea);
+		this.drawingElement.x = screenCoords.x;
+		this.drawingElement.y = screenCoords.y;
+		this.drawingElement.z = screenCoords.z;
+		canvas.addDrawingElement(this.drawingElement);
 	}
 }
 
@@ -32,6 +37,7 @@ class Line extends Entity {
 		this.selectableArea = new LineArea(5);
 		this.selectableArea.onHover = new EventConsoleLog("Hovering Line"); //new EventAddSprite and EventAddSelectableArea which when clicked EventRespondWithVertex...?
 		this.selectableArea.onClick = new EventConsoleLog("Clicked Line"); //new EventAddNewLinePoint
+		this.drawingElement = new Line(0,0,0,0,0,0,"#00FF00");
 	}
 	translateToCanvas(canvas) {
 		var screenCoordsEndpoint1 = canvas.camera.getScreenCoordsOfVertex(this.endpointVertex1);
@@ -41,5 +47,12 @@ class Line extends Entity {
 		this.selectableArea.x2 = screenCoordsEndpoint2.x;
 		this.selectableArea.y2 = screenCoordsEndpoint2.y;
 		canvas.addSelectableArea(this.selectableArea);
+		this.drawingElement.x1 = screenCoordsEndpoint1.x;
+		this.drawingElement.y1 = screenCoordsEndpoint1.y;
+		this.drawingElement.z1 = screenCoordsEndpoint1.z;
+		this.drawingElement.x2 = screenCoordsEndpoint2.x;
+		this.drawingElement.y2 = screenCoordsEndpoint2.y;
+		this.drawingElement.z2 = screenCoordsEndpoint2.z;
+		canvas.addDrawingElement(this.drawingElement);
 	}
 }
