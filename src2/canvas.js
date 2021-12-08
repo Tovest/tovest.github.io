@@ -2,7 +2,7 @@ class Canvas {
 	constructor(canvasID,camera) {
 		this.canvasElement = document.getElementById(canvasID);
 		this.canvasElement.handler = this;
-		this.canvasElement.onmouseout = Canvas.triggerHoverEvent(e);
+		this.canvasElement.onmouseout = Canvas.triggerHoverEvent;
 		this.camera = camera;
 		this.selectableAreas = [];
 		this.drawingElements = [];
