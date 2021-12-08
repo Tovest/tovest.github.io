@@ -3,7 +3,7 @@ class DrawingElement {
 	requestDrawTo(canvas) {}
 }
 
-class Point extends DrawingElement {
+class PointDrawing extends DrawingElement {
 	constructor(x,y,z,color) {
 		super();
 		this.x = x;
@@ -16,7 +16,7 @@ class Point extends DrawingElement {
 	}
 }
 
-class Line extends DrawingElement {
+class LineDrawing extends DrawingElement {
 	constructor(x1,y1,z1,x2,y2,z2,color) {
 		super();
 		this.x1 = x1;
@@ -32,7 +32,7 @@ class Line extends DrawingElement {
 	}
 }
 
-class Triangle extends DrawingElement {
+class TriangleDrawing extends DrawingElement {
 	constructor(x1,y1,z1,x2,y2,z2,x3,y3,z3,color) {
 		super();
 		this.x1 = x1;
