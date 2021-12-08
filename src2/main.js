@@ -32,7 +32,7 @@ button2.innerHTML = "Backward";
 button3.onclick = function(e) {workplace.canvas.camera.yaw += Math.PI/10; workplace.canvas.camera.updateVectors(); workplace.render();};
 button3.innerHTML = "+Yaw";
 
-button4.onclick = function(e) {workplace.canvas.camera.yaw += Math.PI/10; workplace.canvas.camera.updateVectors(); workplace.render();};
+button4.onclick = function(e) {workplace.canvas.camera.yaw -= Math.PI/10; workplace.canvas.camera.updateVectors(); workplace.render();};
 button4.innerHTML = "-Yaw";
 
 button5.onclick = function(e) {workplace.canvas.camera.pitch += Math.PI/10; workplace.canvas.camera.updateVectors(); workplace.render();};
