@@ -9,7 +9,7 @@ class SnapPoint extends Entity {
 	constructor(vertex) {
 		super();
 		this.vertex = vertex;
-		this.selectableArea = new PointArea(this.vertex,5);
+		this.selectableArea = new PointArea(5);
 		this.selectableArea.onHover = new EventConsoleLog("Hovering Snap Point"); //new EventAddSprite
 		this.selectableArea.onClick = new EventConsoleLog("Clicked Snap Point"); //new EventRespondWithVertex(this.point)
 	}
@@ -29,7 +29,7 @@ class Line extends Entity {
 		super();
 		this.endpointVertex1 = endpointVertex1;
 		this.endpointVertex2 = endpointVertex2;
-		this.selectableArea = new LineArea(this.endpointVertex1,this.endpointVertex2);
+		this.selectableArea = new LineArea(5);
 		this.selectableArea.onHover = new EventConsoleLog("Hovering Line"); //new EventAddSprite
 		this.selectableArea.onClick = new EventConsoleLog("Clicked Line"); //new EventAddNewLinePoint
 	}
