@@ -3,16 +3,16 @@ class DrawingElement {
 	requestDrawTo(canvas) {}
 }
 
-class Poin extends DrawingElement {
-	constructor(x,y,z,sprite) {
+class Point extends DrawingElement {
+	constructor(x,y,z,color) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.sprite = sprite;
+		this.color = color;
 	}
 	requestDrawTo(canvas) {
-		canvas.drawSprite(this);
+		canvas.drawPoint(this);
 	}
 }
 
