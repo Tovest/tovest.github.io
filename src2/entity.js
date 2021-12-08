@@ -5,7 +5,7 @@ class Entity {
 	}
 }
 
-class SnapPoint extends Entity {
+class SnapPointEntity extends Entity {
 	constructor(vertex) {
 		super();
 		this.vertex = vertex;
@@ -29,7 +29,7 @@ class SnapPoint extends Entity {
 	}
 }
 
-class Line extends Entity {
+class LineEntity extends Entity {
 	constructor(endpointVertex1,endpointVertex2) {
 		super();
 		this.endpointVertex1 = endpointVertex1;
