@@ -29,21 +29,21 @@ button2.onclick = function(e) {
 };
 button2.innerHTML = "Backward";
 
-button3.onclick = function(e) {workplace.canvas.camera.yaw += Math.PI/10; workplace.render();};
+button3.onclick = function(e) {workplace.canvas.camera.yaw += Math.PI/10; workplace.canvas.camera.updateVectors(); workplace.render();};
 button3.innerHTML = "+Yaw";
 
-button4.onclick = function(e) {workplace.canvas.camera.yaw += Math.PI/10; workplace.render();};
+button4.onclick = function(e) {workplace.canvas.camera.yaw += Math.PI/10; workplace.canvas.camera.updateVectors(); workplace.render();};
 button4.innerHTML = "-Yaw";
 
-button5.onclick = function(e) {workplace.canvas.camera.pitch += Math.PI/10; workplace.render();};
+button5.onclick = function(e) {workplace.canvas.camera.pitch += Math.PI/10; workplace.canvas.camera.updateVectors(); workplace.render();};
 button5.innerHTML = "+Pitch";
 
-button6.onclick = function(e) {workplace.canvas.camera.pitch -= Math.PI/10; workplace.render();};
+button6.onclick = function(e) {workplace.canvas.camera.pitch -= Math.PI/10; workplace.canvas.camera.updateVectors(); workplace.render();};
 button6.innerHTML = "-Pitch";
 
-button7.onclick = function(e) {workplace.canvas.camera.roll += Math.PI/10; workplace.render();};
+button7.onclick = function(e) {workplace.canvas.camera.roll += Math.PI/10; workplace.canvas.camera.updateVectors(); workplace.render();};
 button7.innerHTML = "+Roll";
 
-button8.onclick = function(e) {workplace.canvas.camera.roll -= Math.PI/10; workplace.render();};
+button8.onclick = function(e) {workplace.canvas.camera.roll -= Math.PI/10; workplace.canvas.camera.updateVectors(); workplace.render();};
 button8.innerHTML = "-Roll";
 
