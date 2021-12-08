@@ -28,14 +28,14 @@ class Canvas {
 	}
 	triggerHover(x,y) {
 		for (var i=0; i<this.selectableAreas.length; i++) {
-			if (this.selectableAreas[i].containsPoint(x-this.canvasElement.width/2,y-this.canvasElement.height/2)) {
+			if (this.selectableAreas[i].containsPoint(x-this.canvasElement.width/2,this.canvasElement.height/2-y)) {
 				this.selectableAreas[i].onHover.execute();
 			}
 		}
 	}
 	triggerClick(x,y) {
 		for (var i=0; i<this.selectableAreas.length; i++) {
-			if (this.selectableAreas[i].containsPoint(x-this.canvasElement.width/2,y-this.canvasElement.height/2)) {
+			if (this.selectableAreas[i].containsPoint(x-this.canvasElement.width/2,this.canvasElement.height/2-y)) {
 				this.selectableAreas[i].onClick.execute();
 			}
 		}
