@@ -1,7 +1,7 @@
 class Entity {
 	constructor() {}
 	translateToCanvas(camera,canvas) {
-		console.log(this, ">>> this entity has not defined the translateToCanvas function");
+		console.log(this, "this entity has not defined the translateToCanvas function");
 	}
 }
 
