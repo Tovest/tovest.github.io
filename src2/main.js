@@ -1,8 +1,8 @@
 var canvas = new Canvas2d("canvas", new CameraOrtho(0,0,0,0,0,0));
 var snapPoint1 = SnapPointEntity.create(-50,20,30);
 var snapPoint2 = SnapPointEntity.create(50,20,10);
-var line = LineEntity(snapPoint1,snapPoint2);
-var workplace = new Workplace([snapPoint],canvas);
+var line = new LineEntity(snapPoint1,snapPoint2);
+var workplace = new Workplace([snapPoint1,snapPoint2,line],canvas);
 
 workplace.render();
 
