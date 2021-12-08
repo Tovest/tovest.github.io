@@ -13,9 +13,9 @@ class Camera {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.yaw = undefined;
-		this.pitch = undefined;
-		this.roll = undefined;
+		this.yaw = yaw;
+		this.pitch = pitch;
+		this.roll = roll;
 		this.vectorFront = undefined;
 		this.vectorSide = undefined;
 		this.vectorUp = undefined;
