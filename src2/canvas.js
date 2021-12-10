@@ -81,4 +81,19 @@ class Canvas2d extends Canvas {
 		this.ctx.fillStyle = line.color;
 		this.ctx.stroke();
 	}
+	drawTriangle(triangle) {
+		var w = this.canvasElement.width/2;
+		var h = this.canvasElement.height/2;
+		this.ctx.beginPath();
+		this.ctx.lineWidth = 1;
+		this.ctx.moveTo(w+triangle.x1, h-triangle.y1);
+		this.ctx.lineTo(w+triangle.x2, h-triangle.y2);
+		this.ctx.lineTo(w+triangle.x3, h-triangle.y3);
+		this.ctx.lineTo(w+triangle.x1, h-triangle.y1);
+		this.ctx.closePath();
+		this.ctx.fillStyle = triangle.color;
+		this.ctx.stroke();
+		this.ctx.fillStyle = "#000000";
+		this.ctx.fill();
+	}
 }
