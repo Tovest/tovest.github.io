@@ -50,7 +50,7 @@ class LineArea extends SelectableArea {
 	}
 }
 
-class TrisArea extends SelectableArea {
+class TriangleArea extends SelectableArea {
 	constructor() {
 		super();
 		this.x1 = undefined;
