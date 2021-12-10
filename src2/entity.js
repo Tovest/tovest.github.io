@@ -56,3 +56,38 @@ class LineEntity extends Entity {
 		canvas.addDrawingElement(this.drawingElement);
 	}
 }
+
+class TriangleEntity extends Entity {
+	constructor(vertex1,vertex2,vertex3) {
+		super();
+		this.vertex1 = vertex1;
+		this.vertex2 = vertex2;
+		this.vertex3 = vertex3;
+		this.selectableArea = new TriangleArea();
+		this.selectableArea.onHover = new EventConsoleLog("Hovering Triangle");
+		this.selectableArea.onClick = new EventConsoleLog("Clicked Triangle");
+		this.drawingElement = new TriangleDrawing(0,0,0,0,0,0,0,0,0,"#FF00FF");
+	}
+	translateToCanvas(canvas) {
+		var screenCoordsVertex1 = canvas.camera.getScreenCoordsOfVertex(this.vertex1);
+		var screenCoordsVertex2 = canvas.camera.getScreenCoordsOfVertex(this.vertex2);
+		var screenCoordsVertex3 = canvas.camera.getScreenCoordsOfVertex(this.vertex3);
+		this.selectableArea.x1 = screenCoordsVertex1.x;
+		this.selectableArea.y1 = screenCoordsVertex1.y;
+		this.selectableArea.x2 = screenCoordsVertex2.x;
+		this.selectableArea.y2 = screenCoordsVertex2.y;
+		this.selectableArea.x3 = screenCoordsVertex3.x;
+		this.selectableArea.y3 = screenCoordsVertex3.y;
+		canvas.addSelectableArea(this.selectableArea);
+		this.drawingElement.x1 = screenCoordsVertex1.x;
+		this.drawingElement.y1 = screenCoordsVertex1.y;
+		this.drawingElement.z1 = screenCoordsVertex1.z;
+		this.drawingElement.x2 = screenCoordsVertex2.x;
+		this.drawingElement.y2 = screenCoordsVertex2.y;
+		this.drawingElement.z2 = screenCoordsVertex2.z;
+		this.drawingElement.x3 = screenCoordsVertex3.x;
+		this.drawingElement.y3 = screenCoordsVertex3.y;
+		this.drawingElement.z3 = screenCoordsVertex3.z;
+		canvas.addDrawingElement(this.drawingElement);
+	}
+}
