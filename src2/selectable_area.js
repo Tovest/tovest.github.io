@@ -65,8 +65,6 @@ class TriangleArea extends SelectableArea {
 			(sideOfLineUnormalized(this.x1,this.y1,this.x2,this.y2,x,y) >= 0)+
 			(sideOfLineUnormalized(this.x2,this.y2,this.x3,this.y3,x,y) >= 0)+
 			(sideOfLineUnormalized(this.x3,this.y3,this.x1,this.y1,x,y) >= 0);
-		return (
-			return (sumOfSides == 0 || sumOfSides == 3);
-		);
+		return (sumOfSides == 0 || sumOfSides == 3);
 	}
 }
