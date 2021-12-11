@@ -2,7 +2,7 @@ class Terminal {
 	constructor(inputID,workplace) {
 		this.inputElement = document.getElementById(inputID);
 		this.inputElement.handler = this;
-		this.inputElement.onkeypress = function(e) {if (e.keyCode == 13) e.target.handler.takeStringInput(e.target.value); e.target.value = "";};
+		this.inputElement.onkeypress = function(e) {if (e.keyCode == 13) {e.target.handler.takeStringInput(e.target.value); e.target.value = "";};};
 		this.workplace = workplace;
 		this.currentRequest = new RequestNewRequest();
 		this.errorList = [];
