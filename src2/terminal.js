@@ -48,7 +48,7 @@ class RequestNewRequest { //Implements Request (inputs methods)
 				terminal.currentRequest = new RequestSnapPoint();
 				break;
 			default:
-				terminal.currentRequest = new RequestConsoleLog();
+				terminal.currentRequest = new RequestConsoleLog("Default action consoleLog");
 		}
 	}
 }
