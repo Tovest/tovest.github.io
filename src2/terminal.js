@@ -1,7 +1,7 @@
 class Terminal {
 	constructor(workplace) {
 		this.workplace = workplace;
-		this.currentRequest = undefined;
+		this.currentRequest = new RequestNewRequest();
 		this.errorList = [];
 	}
 	submitError(errorNode) {
@@ -10,7 +10,7 @@ class Terminal {
 	}
 	finalizeRequest() {
 		//Alert or something
-		this.currentRequest = undefined;
+		this.currentRequest = new RequestNewRequest();
 	}
 	takeStringInput(string) {
 		var tokens = string.split(' ');
@@ -34,6 +34,17 @@ class ErrorStringMessage extends ErrorNode {
 	}
 	errorToString() {
 		return this.message;
+	}
+}
+
+class RequestNewRequest { //Implements Request (inputs methods)
+	constructor() {}
+	inputString(string,terminal) {
+		switch(string) {
+			case snap:
+				terminal.currentRequest = new RequestSnapPoint();
+				break;
+		}
 	}
 }
 
@@ -89,4 +100,3 @@ class RequestSnapPoint { //Implements Request (input methods) Vector3dReceiver (
 		terminal.finalizeRequest();
 	}
 }
-	
