@@ -15,6 +15,7 @@ class Terminal {
 	takeStringInput(string) {
 		var tokens = string.split(' ');
 		for (var i=0; i<tokens.length; i++) {
+			console.log(this.currentRequest);
 			this.currentRequest.inputString(tokens[i],this);
 		}
 	}
