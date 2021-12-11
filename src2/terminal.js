@@ -62,7 +62,7 @@ class RequestFloat { //Implements Request (input methods)
 class RequestVector3d { //Implements Request (input methods) and FloatReceiver (receiveFloat method)
 	constructor(requester) {
 		this.requester = requester; //Implements Vector3dReceiver (receiveVector3d method)
-		this.subRequests = [new RequestFloat(this),RequestFloat(this),RequestFloat(this)]
+		this.subRequests = [new RequestFloat(this),new RequestFloat(this),new RequestFloat(this)]
 		this.currentRequestIndex = 0;
 		this.results = [0,0,0];
 	}
