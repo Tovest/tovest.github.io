@@ -85,7 +85,7 @@ class RequestSnapPoint { //Implements Request (input methods) Vector3dReceiver (
 		this.vector3dRequester.inputString(string,terminal);
 	}
 	receiveVector3d(vector3d,terminal) {
-		terminal.workplace.entityList.push(EntitySnapPoint.create(vector3d.x,vector3d.y,vector3d.z));
+		terminal.workplace.entityList.push(SnapPointEntity.create(vector3d.x,vector3d.y,vector3d.z));
 		terminal.finalizeRequest();
 	}
 }
