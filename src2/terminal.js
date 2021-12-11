@@ -15,7 +15,6 @@ class Terminal {
 	takeStringInput(string) {
 		var tokens = string.split(' ');
 		for (var i=0; i<tokens.length; i++) {
-			console.log(this.currentRequest);
 			this.currentRequest.inputString(tokens[i],this);
 		}
 	}
@@ -56,7 +55,6 @@ class RequestFloat { //Implements Request (input methods)
 			terminal.finalizeRequest();
 		}
 		this.requester.receiveFloat(string,terminal);
-		return true;
 	}
 }
 
@@ -71,7 +69,7 @@ class RequestVector3d { //Implements Request (input methods) and FloatReceiver (
 		if (this.currentRequestIndex == this.subRequests.length) {
 			this.requester.receiveVector3d(new Vector3d(this.results[0],this.results[1],this.results[2]));
 		}
-		return this.subRequestes[this.currentRequestIndex].inputString(string,terminal);
+		this.subRequestes[this.currentRequestIndex].inputString(string,terminal);
 	}
 	receiveFloat(value,terminal) {
 		this.results[this.currentRequestIndex] = value;
