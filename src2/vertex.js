@@ -41,6 +41,8 @@ class VertexLinePoint extends Vertex {
 	constructor(v1,v2,proportion) {
 		super( (v1.x+v2.x)*proportion , (v1.y+v2.y)*proportion , (v1.z+v2.z)*proportion );
 		this.proportion = proportion;
+		this.v1 = v1;
+		this.v2 = v2;
 		v1.observers.push(this);
 		v2.observers.push(this);
 	}
