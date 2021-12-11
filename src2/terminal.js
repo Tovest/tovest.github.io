@@ -69,7 +69,7 @@ class RequestVector3d { //Implements Request (input methods) and FloatReceiver (
 		if (this.currentRequestIndex == this.subRequests.length) {
 			this.requester.receiveVector3d(new Vector3d(this.results[0],this.results[1],this.results[2]));
 		}
-		this.subRequestes[this.currentRequestIndex].inputString(string,terminal);
+		this.subRequests[this.currentRequestIndex].inputString(string,terminal);
 	}
 	receiveFloat(value,terminal) {
 		this.results[this.currentRequestIndex] = value;
