@@ -47,9 +47,9 @@ class VertexLinePoint extends Vertex {
 		v2.observers.push(this);
 	}
 	updateSelf() {
-		this.x = (v1.x+v2.x)*this.proportion;
-		this.y = (v1.y+v2.y)*this.proportion;
-		this.z = (v1.z+v2.z)*this.proportion;
+		this.x = (this.v1.x+this.v2.x)*this.proportion;
+		this.y = (this.v1.y+this.v2.y)*this.proportion;
+		this.z = (this.v1.z+this.v2.z)*this.proportion;
 		this.notifyObservers();
 	}
 }
