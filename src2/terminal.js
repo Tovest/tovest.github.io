@@ -49,7 +49,9 @@ class RequestFloat { //Implements Request (input methods)
 		this.requester = requester; //Implements ValueReceiver (receiveFloat method)
 	}
 	inputString(string,terminal) {
+		console.log("inputString requestFloat gotHere")
 		var value = parseFloat(string); //I'll avoid using type conversion
+		console.log(value);
 		if (isNaN(value)) {
 			terminal.submitError(new ErrorStringMessage("NaN: parse failed for", this));
 			terminal.finalizeRequest();
@@ -66,12 +68,14 @@ class RequestVector3d { //Implements Request (input methods) and FloatReceiver (
 		this.results = [0,0,0];
 	}
 	inputString(string,terminal) {
+		console.log("inputString requestVector3d gotHere");
 		if (this.currentRequestIndex == this.subRequests.length) {
 			this.requester.receiveVector3d(new Vector3d(this.results[0],this.results[1],this.results[2]));
 		}
 		this.subRequests[this.currentRequestIndex].inputString(string,terminal);
 	}
 	receiveFloat(value,terminal) {
+		console.log("receiveFloat gotHere");
 		this.results[this.currentRequestIndex] = value;
 		this.currentRequestIndex += 1;
 	}
@@ -82,9 +86,11 @@ class RequestSnapPoint { //Implements Request (input methods) Vector3dReceiver (
 		this.vector3dRequester = new RequestVector3d(this);
 	}
 	inputString(string,terminal) {
+		console.log("inputString requestSnapPoint gotHere");
 		this.vector3dRequester.inputString(string,terminal);
 	}
 	receiveVector3d(vector3d,terminal) {
+		console.log("receiveVector3d gotHere");
 		terminal.workplace.entityList.push(EntitySnapPoint.create(vector3d.x,vector3d.y,vector3d.z));
 		terminal.finalizeRequest();
 	}
