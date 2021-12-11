@@ -44,7 +44,7 @@ class RequestNewRequest { //Implements Request (inputs methods)
 	constructor() {}
 	inputString(string,terminal) {
 		switch(string) {
-			case snap:
+			case "snap":
 				terminal.currentRequest = new RequestSnapPoint();
 				break;
 			default:
