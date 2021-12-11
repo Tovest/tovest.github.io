@@ -47,13 +47,18 @@ class RequestNewRequest { //Implements Request (inputs methods)
 			case snap:
 				terminal.currentRequest = new RequestSnapPoint();
 				break;
+			default:
+				terminal.currentRequest = new RequestConsoleLog();
 		}
 	}
 }
 
 class RequestConsoleLog { //Implements Request (input methods)
+	constructor(pretext) {
+		this.pretext = pretext;
+	}
 	inputString(string,terminal) {
-		console.log(string);
+		console.log(this.pretext, string);
 		terminal.finalizeRequest();
 	}
 }
