@@ -40,7 +40,7 @@ class ErrorStringMessage extends ErrorNode {
 class RequestConsoleLog { //Implements Request (input methods)
 	inputString(string,terminal) {
 		console.log(string);
-		return undefined;
+		terminal.finalizeRequest();
 	}
 }
 
