@@ -1,6 +1,6 @@
 class Terminal {
-	constructor(inputId,workplace) {
-		this.inputElement = document.getElementById(inputId);
+	constructor(inputID,workplace) {
+		this.inputElement = document.getElementById(inputID);
 		this.inputElement.handler = this;
 		this.inputElement.onkeyup = function(e) {if (e.keyCode == 13) e.target.handler.takeStringInput(e.target.value);};
 		this.workplace = workplace;
