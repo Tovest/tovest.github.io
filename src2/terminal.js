@@ -1,5 +1,8 @@
 class Terminal {
-	constructor(workplace) {
+	constructor(inputId,workplace) {
+		this.inputElement = document.getElementById(inputId);
+		this.inputElement.handler = this;
+		this.inputElement.onchange = function(e) {e.target.handler.takeStringInput(e.value)};
 		this.workplace = workplace;
 		this.currentRequest = new RequestNewRequest();
 		this.errorList = [];
