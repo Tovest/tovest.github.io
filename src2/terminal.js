@@ -71,7 +71,7 @@ class RequestFloat { //Implements Request (input methods)
 	inputString(string,terminal) {
 		var value = parseFloat(string); //I'll avoid using type conversion
 		if (isNaN(value)) {
-			terminal.submitError(new ErrorStringMessage("NaN: parse failed for", this));
+			terminal.submitError(new ErrorStringMessage("NaN: parse failed"));
 			terminal.finalizeRequest();
 		}
 		this.requester.receiveFloat(string,terminal);
