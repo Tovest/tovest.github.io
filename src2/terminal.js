@@ -83,7 +83,7 @@ class RequestConsoleLog { //Implements Request (inputs and log methods)
 		console.log(this.pretext, string);
 		terminal.finalizeRequest();
 	}
-	inputVertex {
+	inputVertex(vertex,terminal) {
 		terminal.log(new LogStringMessage("Vertex input not supported");
 	}
 }
