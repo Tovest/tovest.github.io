@@ -1,8 +1,5 @@
 class Terminal {
-	constructor(inputID,workplace) {
-		this.inputElement = document.getElementById(inputID);
-		this.inputElement.handler = this;
-		this.inputElement.onkeypress = function(e) {if (e.keyCode == 13) {e.target.handler.takeStringInput(e.target.value); e.target.value = "";};};
+	constructor() {
 		this.workplace = workplace;
 		this.currentRequest = new RequestNewRequest();
 		this.logs = [];
@@ -17,9 +14,24 @@ class Terminal {
 	}
 	takeStringInput(string) {
 		var tokens = string.split(' ');
-		for (var i=0; i<tokens.length; i++) {
+		if (tokens.length == 0) this.log(new LogStringMessage("No string input"));
+		for (var i=0; i<tokens.length-1; i++) {
 			this.currentRequest.inputString(tokens[i],this);
 		}
+		this.currentRequest.inputString(tokens[tokens.length],this);
+		this.currentRequest.logStatus(this);
+	}
+	takeVertexInput(vertex) {
+		this.currentRequest.inputVertex(vertex,this);
+	}
+}
+
+class TerminalHTML extends Terminal {
+	constructor(inputID,workplace) {
+		super();
+		this.inputElement = document.getElementById(inputID);
+		this.inputElement.handler = this;
+		this.inputElement.onkeypress = function(e) {if (e.keyCode == 13) {e.target.handler.takeStringInput(e.target.value); e.target.value = "";};};
 	}
 }
 
@@ -40,8 +52,11 @@ class LogStringMessage extends Log {
 	}
 }
 
-class RequestNewRequest { //Implements Request (inputs methods)
+class RequestNewRequest { //Implements Request (inputs and log methods)
 	constructor() {}
+	logStatus() {
+		terminal.log(new LogStringMessage("Status: Request command"));
+	}
 	inputString(string,terminal) {
 		switch(string) {
 			case "snap":
@@ -52,21 +67,33 @@ class RequestNewRequest { //Implements Request (inputs methods)
 				break;
 		}
 	}
+	inputVertex(vertex,terminal) {
+		return;
+	}
 }
 
-class RequestConsoleLog { //Implements Request (input methods)
+class RequestConsoleLog { //Implements Request (inputs and log methods)
 	constructor(pretext) {
 		this.pretext = pretext;
+	}
+	logStatus(terminal) {
+		terminal.log(new LogStringMessage("Status: Request Console Log"));
 	}
 	inputString(string,terminal) {
 		console.log(this.pretext, string);
 		terminal.finalizeRequest();
 	}
+	inputVertex {
+		terminal.log(new LogStringMessage("Vertex input not supported");
+	}
 }
 
-class RequestFloat { //Implements Request (input methods)
+class RequestFloat { //Implements Request (inputs and log methods)
 	constructor(requester) {
 		this.requester = requester; //Implements ValueReceiver (receiveFloat method)
+	}
+	logStatus(terminal) {
+		terminal.log(new LogStringMessage("Status: Request Float"));
 	}
 	inputString(string,terminal) {
 		var value = parseFloat(string); //I'll avoid using type conversion
@@ -76,14 +103,20 @@ class RequestFloat { //Implements Request (input methods)
 		}
 		this.requester.receiveFloat(string,terminal);
 	}
+	inputVertex(vertex,terminal) {
+		terminal.log(new LogStringMessage("Vertex input not supported");
+	}
 }
 
-class RequestVector3d { //Implements Request (input methods) and FloatReceiver (receiveFloat method)
+class RequestVector3d { //Implements Request (inputs and log methods) and FloatReceiver (receiveFloat method)
 	constructor(requester) {
 		this.requester = requester; //Implements Vector3dReceiver (receiveVector3d method)
 		this.subRequests = [new RequestFloat(this),new RequestFloat(this),new RequestFloat(this)]
 		this.currentRequestIndex = 0;
 		this.results = [0,0,0];
+	}
+	logStatus(terminal) {
+		terminal.log(new LogStringMessage("Status: Request Vector3d"));
 	}
 	inputString(string,terminal) {
 		this.subRequests[this.currentRequestIndex].inputString(string,terminal);
@@ -95,17 +128,27 @@ class RequestVector3d { //Implements Request (input methods) and FloatReceiver (
 			this.requester.receiveVector3d(new Vector3d(this.results[0],this.results[1],this.results[2]), terminal);
 		}
 	}
+	inputVertex(vertex,terminal) {
+		this.requester.receiveVector3d(new Vector3d(vertex.x,vertex.y,vertex.z));
+	}
 }
 
-class RequestSnapPoint { //Implements Request (input methods) Vector3dReceiver (receiveVector3d method)
+class RequestSnapPoint { //Implements Request (inputs and log methods) Vector3dReceiver (receiveVector3d method)
 	constructor() {
 		this.vector3dRequester = new RequestVector3d(this);
+	}
+	logStatus(terminal) {
+		terminal.log(new LogStringMessage("Status: Request Snap Point"));
 	}
 	inputString(string,terminal) {
 		this.vector3dRequester.inputString(string,terminal);
 	}
 	receiveVector3d(vector3d,terminal) {
 		terminal.workplace.entityList.push(SnapPointEntity.create(vector3d.x,vector3d.y,vector3d.z));
+		terminal.finalizeRequest();
+	}
+	inputVertex(vertex,terminal) {
+		terminal.workplace.entityList.push(new SnapPointEntity(vertex));
 		terminal.finalizeRequest();
 	}
 }
