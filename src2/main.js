@@ -5,7 +5,7 @@ var snapPoint3 = SnapPointEntity.create(30,20,0);
 var midPoint = new SnapPointEntity(new VertexLinePoint(snapPoint1.vertex,snapPoint2.vertex,0.5));
 var triangle = new TriangleEntity(snapPoint1.vertex,snapPoint2.vertex,snapPoint3.vertex)
 var workplace = new Workplace([snapPoint1,snapPoint2,snapPoint3,triangle,midPoint],canvas);
-var terminal = new Terminal("input",workplace);
+var terminal = new TerminalHTML("input",workplace);
 
 workplace.render();
 
