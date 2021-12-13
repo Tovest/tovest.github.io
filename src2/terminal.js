@@ -1,5 +1,5 @@
 class Terminal {
-	constructor() {
+	constructor(workplace) {
 		this.workplace = workplace;
 		this.currentRequest = new RequestNewRequest();
 		this.logs = [];
@@ -28,7 +28,7 @@ class Terminal {
 
 class TerminalHTML extends Terminal {
 	constructor(inputID,workplace) {
-		super();
+		super(workplace);
 		this.inputElement = document.getElementById(inputID);
 		this.inputElement.handler = this;
 		this.inputElement.onkeypress = function(e) {if (e.keyCode == 13) {e.target.handler.takeStringInput(e.target.value); e.target.value = "";};};
