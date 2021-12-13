@@ -5,11 +5,11 @@ class Terminal {
 		this.inputElement.onkeypress = function(e) {if (e.keyCode == 13) {e.target.handler.takeStringInput(e.target.value); e.target.value = "";};};
 		this.workplace = workplace;
 		this.currentRequest = new RequestNewRequest();
-		this.errorList = [];
+		this.logs = [];
 	}
-	submitError(errorNode) {
+	log(logNode) {
 		//Alert or something
-		this.errorList.push(errorNode);
+		this.logs.push(logNode);
 	}
 	finalizeRequest() {
 		//Alert or something
@@ -23,19 +23,19 @@ class Terminal {
 	}
 }
 
-class ErrorNode {
+class Log {
 	constructor() {}
-	errorToString() {
-		return "This is a generic error node";
+	logToString() {
+		return "This is a generic log node";
 	}
 }
 
-class ErrorStringMessage extends ErrorNode {
+class LogStringMessage extends Log {
 	constructor(message) {
 		super();
 		this.message = message;
 	}
-	errorToString() {
+	logToString() {
 		return this.message;
 	}
 }
@@ -47,7 +47,7 @@ class RequestNewRequest { //Implements Request (inputs methods)
 			case "snap":
 				terminal.currentRequest = new RequestSnapPoint();
 				break;
-			case "log":
+			case "consolelog":
 				terminal.currentRequest = new RequestConsoleLog("Log:");
 				break;
 		}
@@ -71,7 +71,7 @@ class RequestFloat { //Implements Request (input methods)
 	inputString(string,terminal) {
 		var value = parseFloat(string); //I'll avoid using type conversion
 		if (isNaN(value)) {
-			terminal.submitError(new ErrorStringMessage("NaN: parse failed"));
+			terminal.submitError(new LogStringMessage("NaN: parse failed"));
 			terminal.finalizeRequest();
 		}
 		this.requester.receiveFloat(string,terminal);
