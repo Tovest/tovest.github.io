@@ -68,7 +68,7 @@ class RequestNewRequest { //Implements Request (inputs and log methods)
 		}
 	}
 	inputVertex(vertex,terminal) {
-		return;
+		terminal.log(new LogStringMessage("Vertex input not supported"));
 	}
 }
 
@@ -84,7 +84,7 @@ class RequestConsoleLog { //Implements Request (inputs and log methods)
 		terminal.finalizeRequest();
 	}
 	inputVertex(vertex,terminal) {
-		terminal.log(new LogStringMessage("Vertex input not supported");
+		terminal.log(new LogStringMessage("Vertex input not supported"));
 	}
 }
 
@@ -104,7 +104,7 @@ class RequestFloat { //Implements Request (inputs and log methods)
 		this.requester.receiveFloat(string,terminal);
 	}
 	inputVertex(vertex,terminal) {
-		terminal.log(new LogStringMessage("Vertex input not supported");
+		terminal.log(new LogStringMessage("Vertex input not supported"));
 	}
 }
 
