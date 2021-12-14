@@ -14,7 +14,6 @@ class Terminal {
 	}
 	takeStringInput(string) {
 		var tokens = string.split(' ');
-		console.log(tokens);
 		for (var i=0; i<tokens.length-1; i++) {
 			this.currentRequest.inputString(tokens[i],this);
 		}
@@ -35,7 +34,7 @@ class TerminalHTML extends Terminal {
 		this.paragraph = document.getElementById(paragraphID);
 	}
 	log(logNode) {
-		this.paragraph.innerHTML += (logNode.logToString()+"</br>")
+		this.paragraph.innerHTML = logNode.logToString()+"</br>"+this.paragraph.innerHTML;
 		this.currentRequest = new RequestNewRequest();
 	}
 }
