@@ -35,7 +35,6 @@ class TerminalHTML extends Terminal {
 	}
 	log(logNode) {
 		this.paragraph.innerHTML = logNode.logToString()+"</br>"+this.paragraph.innerHTML;
-		this.currentRequest = new RequestNewRequest();
 	}
 }
 
@@ -63,11 +62,9 @@ class RequestNewRequest { //Implements Request (inputs and log methods)
 		switch(string) {
 			case "snap":
 				terminal.currentRequest = new RequestSnapPoint();
-				console.log(terminal.currentRequest);
 				break;
 			case "consolelog":
 				terminal.currentRequest = new RequestConsoleLog("Log:");
-				console.log(terminal.currentRequest);
 				break;
 		}
 	}
