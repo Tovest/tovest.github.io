@@ -11,6 +11,7 @@ class Terminal {
 	finalizeRequest() {
 		//Alert or something
 		this.currentRequest = new RequestNewRequest();
+		this.workplace.render();
 	}
 	takeStringInput(string) {
 		var tokens = string.split(' ');
