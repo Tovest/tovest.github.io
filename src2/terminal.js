@@ -2,12 +2,8 @@ class Terminal {
 	constructor(workplace) {
 		this.workplace = workplace;
 		this.currentRequest = new RequestNewRequest();
-		this.logs = [];
 	}
-	log(logNode) {
-		//Alert or something
-		this.logs.push(logNode);
-	}
+	log(logNode) {}
 	finalizeRequest() {
 		//Alert or something
 		this.currentRequest = new RequestNewRequest();
@@ -56,7 +52,7 @@ class LogStringMessage extends Log {
 	}
 }
 
-class RequestNewRequest { //Implements Request (inputs and log methods)
+class RequestNewRequest { //Implements Request (inputs, log and getStatus methods)
 	constructor() {}
 	logStatus(terminal) {}
 	inputString(string,terminal) {
