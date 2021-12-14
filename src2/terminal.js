@@ -27,11 +27,16 @@ class Terminal {
 }
 
 class TerminalHTML extends Terminal {
-	constructor(inputID,workplace) {
+	constructor(inputID,paragraphID,workplace) {
 		super(workplace);
 		this.inputElement = document.getElementById(inputID);
 		this.inputElement.handler = this;
 		this.inputElement.onkeypress = function(e) {if (e.keyCode == 13) {e.target.handler.takeStringInput(e.target.value); e.target.value = "";};};
+		this.paragraph = document.getElementById(paragraphID);
+	}
+	log(logNode) {
+		this.paragraph.innerHTML += (logNode.logToString()+"</br>")
+		this.currentRequest = new RequestNewRequest();
 	}
 }
 
@@ -54,9 +59,7 @@ class LogStringMessage extends Log {
 
 class RequestNewRequest { //Implements Request (inputs and log methods)
 	constructor() {}
-	logStatus() {
-		terminal.log(new LogStringMessage("Status: Request command"));
-	}
+	logStatus(terminal) {}
 	inputString(string,terminal) {
 		switch(string) {
 			case "snap":
@@ -77,7 +80,7 @@ class RequestConsoleLog { //Implements Request (inputs and log methods)
 		this.pretext = pretext;
 	}
 	logStatus(terminal) {
-		terminal.log(new LogStringMessage("Status: Request Console Log"));
+		terminal.log(new LogStringMessage("Status: Awaiting string to log into console"));
 	}
 	inputString(string,terminal) {
 		console.log(this.pretext, string);
@@ -135,13 +138,13 @@ class RequestVector3d { //Implements Request (inputs and log methods) and FloatR
 
 class RequestSnapPoint { //Implements Request (inputs and log methods) Vector3dReceiver (receiveVector3d method)
 	constructor() {
-		this.vector3dRequester = new RequestVector3d(this);
+		this.vector3dRequest = new RequestVector3d(this);
 	}
 	logStatus(terminal) {
 		terminal.log(new LogStringMessage("Status: Request Snap Point"));
 	}
 	inputString(string,terminal) {
-		this.vector3dRequester.inputString(string,terminal);
+		this.vector3dRequest.inputString(string,terminal);
 	}
 	receiveVector3d(vector3d,terminal) {
 		terminal.workplace.entityList.push(SnapPointEntity.create(vector3d.x,vector3d.y,vector3d.z));
