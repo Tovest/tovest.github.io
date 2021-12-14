@@ -15,11 +15,10 @@ class Terminal {
 	takeStringInput(string) {
 		var tokens = string.split(' ');
 		console.log(tokens);
-		if (tokens.length == 0) this.log(new LogStringMessage("No string input"));
 		for (var i=0; i<tokens.length-1; i++) {
 			this.currentRequest.inputString(tokens[i],this);
 		}
-		this.currentRequest.inputString(tokens[tokens.length],this);
+		this.currentRequest.inputString(tokens[tokens.length-1],this);
 		this.currentRequest.logStatus(this);
 	}
 	takeVertexInput(vertex) {
