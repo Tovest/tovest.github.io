@@ -61,6 +61,7 @@ class RequestNewRequest { //Implements Request (inputs and log methods)
 	constructor() {}
 	logStatus(terminal) {}
 	inputString(string,terminal) {
+		console.log(string);
 		switch(string) {
 			case "snap":
 				terminal.currentRequest = new RequestSnapPoint();
