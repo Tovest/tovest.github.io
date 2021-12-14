@@ -14,6 +14,7 @@ class Terminal {
 	}
 	takeStringInput(string) {
 		var tokens = string.split(' ');
+		console.log(tokens);
 		if (tokens.length == 0) this.log(new LogStringMessage("No string input"));
 		for (var i=0; i<tokens.length-1; i++) {
 			this.currentRequest.inputString(tokens[i],this);
@@ -61,7 +62,6 @@ class RequestNewRequest { //Implements Request (inputs and log methods)
 	constructor() {}
 	logStatus(terminal) {}
 	inputString(string,terminal) {
-		console.log(string);
 		switch(string) {
 			case "snap":
 				terminal.currentRequest = new RequestSnapPoint();
