@@ -9,6 +9,9 @@ class Terminal {
 		this.currentRequest = new RequestDefault();
 		this.workplace.render();
 	}
+	render() {
+		this.workplace.render(this);
+	}
 	takeStringInput(string) {
 		var tokens = string.split(' ');
 		for (var i=0; i<tokens.length-1; i++) {
