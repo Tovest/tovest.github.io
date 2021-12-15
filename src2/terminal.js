@@ -145,8 +145,8 @@ class RequestVector3d extends Request {
 	inputString(string,terminal) {
 		this.floatRequester.inputString(string,terminal);
 	}
-	inputFloat(value,terminal) {
-		this.results[this.numberOfFloatsRecieved] = value;
+	inputFloat(float,terminal) {
+		this.floats[this.numberOfFloatsRecieved] = float;
 		this.numberOfFloatsRecieved += 1;
 		if (this.numberOfFloatsRecieved == 3) {
 			this.requester.inputVector3d(new Vector3d(this.results[0],this.results[1],this.results[2]), terminal);
