@@ -149,7 +149,7 @@ class RequestVector3d extends Request {
 		this.floats[this.numberOfFloatsRecieved] = float;
 		this.numberOfFloatsRecieved += 1;
 		if (this.numberOfFloatsRecieved == 3) {
-			this.requester.inputVector3d(new Vector3d(this.results[0],this.results[1],this.results[2]), terminal);
+			this.requester.inputVector3d(new Vector3d(this.floats[0],this.floats[1],this.floats[2]), terminal);
 			this.reset();
 		}
 	}
