@@ -53,7 +53,6 @@ class LogStringMessage extends Log {
 }
 
 class Request {
-	constructor() {}
 	logStatus(terminal) {
 		terminal.log(new LogStringMessage("Status: ???"));
 	}
