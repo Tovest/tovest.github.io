@@ -72,6 +72,9 @@ class Request { //Technically an interface with default methods
 
 class RequestDefault extends Request {
 	constructor() {super();}
+	logStatus() {
+		terminal.log(new LogStringMessage("Status: Awaiting new command"));
+	}
 	inputString(string,terminal) {
 		switch(string) {
 			case "snap":
