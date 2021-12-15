@@ -8,14 +8,13 @@ class Canvas {
 		this.selectableAreas = [];
 		this.drawingElements = [];
 	}
-	render(entityList) {
+	render(entityList,terminal) {
 		this.selectableAreas = [];
 		this.drawingElements = [];
 		this.clear();
 		for (var i=0; i<entityList.length; i++) {
-			entityList[i].translateToCanvas(this);
+			entityList[i].translateToCanvas(this,terminal);
 		}
-		//// this.triggerHover(x,y);
 		for (var i=0; i<this.drawingElements.length; i++) {
 			this.drawingElements[i].requestDrawTo(this);
 		}
