@@ -10,14 +10,15 @@ class SnapPointEntity extends Entity {
 		super();
 		this.vertex = vertex;
 		this.selectableArea = new PointArea(5);
-		this.selectableArea.onHover = new EventConsoleLog("Hovering Snap Point"); //new EventAddSprite
-		this.selectableArea.onClick = new EventConsoleLog("Clicked Snap Point"); //new EventRespondWithVertex(this.point)
+		this.selectableArea.onHover = new EventLog("Hovering Snap Point"); //new EventAddSprite
+		this.selectableArea.onClick = new EventInputVertex(this.vertex);
 		this.drawingElement = new PointDrawing(0,0,0,"#FF0000");
 	}
 	static create(x,y,z) {
 		return new SnapPointEntity(new VertexEdge(x,y,z));
 	}
-	translateToCanvas(canvas) {
+	translateToCanvas(canvas,terminal) {
+		this.selectableArea.onClick.connectedTerminal = terminal;
 		var screenCoords = canvas.camera.getScreenCoordsOfVertex(this.vertex);
 		this.selectableArea.x = screenCoords.x;
 		this.selectableArea.y = screenCoords.y;
@@ -35,11 +36,12 @@ class LineEntity extends Entity {
 		this.endpointVertex1 = endpointVertex1;
 		this.endpointVertex2 = endpointVertex2;
 		this.selectableArea = new LineArea(5);
-		this.selectableArea.onHover = new EventConsoleLog("Hovering Line"); //new EventAddSprite and EventAddSelectableArea which when clicked EventRespondWithVertex...?
-		this.selectableArea.onClick = new EventConsoleLog("Clicked Line"); //new EventAddNewLinePoint
+		this.selectableArea.onHover = new EventLog("Hovering Line"); //new EventAddSprite and EventAddSelectableArea which when clicked EventRespondWithVertex...?
+		this.selectableArea.onClick = new EventLog("Clicked Line"); //new EventAddNewLinePoint
 		this.drawingElement = new LineDrawing(0,0,0,0,0,0,"#00FF00");
 	}
-	translateToCanvas(canvas) {
+	translateToCanvas(canvas,terminal) {
+		this.selectableArea.onClick.connectedTerminal = terminal;
 		var screenCoordsEndpoint1 = canvas.camera.getScreenCoordsOfVertex(this.endpointVertex1);
 		var screenCoordsEndpoint2 = canvas.camera.getScreenCoordsOfVertex(this.endpointVertex2);
 		this.selectableArea.x1 = screenCoordsEndpoint1.x;
@@ -64,8 +66,8 @@ class TriangleEntity extends Entity {
 		this.vertex2 = vertex2;
 		this.vertex3 = vertex3;
 		this.selectableArea = new TriangleArea();
-		this.selectableArea.onHover = new EventConsoleLog("Hovering Triangle");
-		this.selectableArea.onClick = new EventConsoleLog("Clicked Triangle");
+		this.selectableArea.onHover = new EventLog("Hovering Triangle");
+		this.selectableArea.onClick = new EventLog("Clicked Triangle");
 		this.drawingElement = new TriangleDrawing(0,0,0,0,0,0,0,0,0,"#FF00FF");
 	}
 	translateToCanvas(canvas) {
