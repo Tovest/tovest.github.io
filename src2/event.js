@@ -1,16 +1,18 @@
 class Event {
-	constructor() {}
+	constructor() {
+		this.connectedTerminal = undefined;
+	}
 	execute(requestingArea,vertex,canvas) {
 		return;
 	}
 }
 
-class EventConsoleLog extends Event {
+class EventLog extends Event {
 	constructor(message) {
 		super();
 		this.message = message;
 	}
 	execute() {
-		console.log(this.message);
+		this.connectedTerminal.log(new LogStringMessage(this.message));
 	}
 }
