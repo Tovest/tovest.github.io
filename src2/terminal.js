@@ -52,7 +52,7 @@ class LogStringMessage extends Log {
 	}
 }
 
-class Request {
+class Request { //Technically an interface with default methods
 	logStatus(terminal) {
 		terminal.log(new LogStringMessage("Status: ???"));
 	}
@@ -71,7 +71,7 @@ class Request {
 }
 
 class RequestDefault extends Request {
-	constructor() {}
+	constructor() {super();}
 	inputString(string,terminal) {
 		switch(string) {
 			case "snap":
@@ -86,6 +86,7 @@ class RequestDefault extends Request {
 
 class RequestConsoleLog extends Request {
 	constructor(pretext) {
+		super();
 		this.pretext = pretext;
 	}
 	logStatus(terminal) {
@@ -102,6 +103,7 @@ class RequestConsoleLog extends Request {
 
 class RequestFloat extends Request {
 	constructor(requester) {
+		super();
 		this.requester = requester;
 	}
 	logStatus(terminal) {
@@ -119,6 +121,7 @@ class RequestFloat extends Request {
 
 class RequestVector3d extends Request {
 	constructor(requester) {
+		super();
 		this.requester = requester;
 		this.floatRequester = new RequestFloat(this);
 		this.floatsRecieved = 0;
@@ -141,6 +144,7 @@ class RequestVector3d extends Request {
 
 class RequestSnapPoint extends Request {
 	constructor() {
+		super();
 		this.vector3dRequester = new RequestVector3d(this);
 	}
 	logStatus(terminal) {
