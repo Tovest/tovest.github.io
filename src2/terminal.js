@@ -54,7 +54,10 @@ class LogStringMessage extends Log {
 
 class Request { //Technically an interface with default methods
 	logStatus(terminal) {
-		terminal.log(new LogStringMessage("Status: ???"));
+		terminal.log(new LogStringMessage("Status: unknown status"));
+	}
+	reset() {
+		return;
 	}
 	inputString(string,terminal) {
 		terminal.log(new LogStringMessage("Current request can't handle strings"));
@@ -127,8 +130,11 @@ class RequestVector3d extends Request {
 		super();
 		this.requester = requester;
 		this.floatRequester = new RequestFloat(this);
-		this.floatsRecieved = 0;
-		this.results = [0,0,0];
+		this.numberOfFloatsRecieved = 0;
+		this.floats = [0,0,0];
+	}
+	reset() {
+		this.numberOfFloatsRecieved = 0;
 	}
 	logStatus(terminal) {
 		terminal.log(new LogStringMessage("Status: Request Vector3d"));
@@ -137,10 +143,11 @@ class RequestVector3d extends Request {
 		this.floatRequester.inputString(string,terminal);
 	}
 	inputFloat(value,terminal) {
-		this.results[this.floatsRecieved] = value;
-		this.floatsRecieved += 1;
-		if (this.floatsRecieved == 3) {
+		this.results[this.numberOfFloatsRecieved] = value;
+		this.numberOfFloatsRecieved += 1;
+		if (this.numberOfFloatsRecieved == 3) {
 			this.requester.inputVector3d(new Vector3d(this.results[0],this.results[1],this.results[2]), terminal);
+			this.reset();
 		}
 	}
 }
@@ -163,5 +170,37 @@ class RequestSnapPoint extends Request {
 	inputVertex(vertex,terminal) {
 		terminal.workplace.entityList.push(new SnapPointEntity(vertex));
 		terminal.finalizeRequest();
+	}
+}
+
+class RequestLine extends Request {
+	constructor() {
+		super();
+		this.vector3dRequester = new RequestVector3d(this);
+		this.numberOfVerticiesRecieved = 0;
+		this.verticies = [0,0];
+	}
+	logStatus(terminal) {
+		terminal.log(new LogStringMessage("Status: Request Snap Point"));
+	}
+	inputString(string,terminal) {
+		this.vector3dRequester.inputString(string,terminal);
+	}
+	inputVector3d(vector3d,terminal) {
+		this.verticies[this.numberOfVerticiesRecieved] = new VertexEdge(vector3d.x,vector3d.y,vector3d.z)
+		this.numberOfVerticiesRecieved += 1;
+		if (this.numberOfVerticiesRecieved == 2) {
+			terminal.workplace.entityList.push(new Line(this.verticies[0],this.verticies[1]));
+			terminal.finalizeRequest();
+		}
+	}
+	inputVertex(vertex,terminal) {
+		this.vector3dRequester.reset();
+		this.verticies[this.numberOfVerticiesRecieved] = vertex;
+		this.numberOfVerticiesRecieved += 1;
+		if (this.numberOfVerticiesRecieved == 2) {
+			terminal.workplace.entityList.push(new Line(this.verticies[0],this.verticies[1]));
+			terminal.finalizeRequest();
+		}
 	}
 }
