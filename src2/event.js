@@ -16,3 +16,13 @@ class EventLog extends Event {
 		this.connectedTerminal.log(new LogStringMessage(this.message));
 	}
 }
+
+class EventInputVertex extends Event {
+	constructor(vertex) {
+		super();
+		this.vertex = vertex;
+	}
+	execute() {
+		this.connectedTerminal.takeVertexInput(this.vertex);
+	}
+}
