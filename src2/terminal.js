@@ -202,7 +202,7 @@ class RequestLine extends Request {
 		this.verticies[this.numberOfVerticiesRecieved] = vertex;
 		this.numberOfVerticiesRecieved += 1;
 		if (this.numberOfVerticiesRecieved == 2) {
-			terminal.workplace.entityList.push(new Line(this.verticies[0],this.verticies[1]));
+			terminal.workplace.entityList.push(new LineEntity(this.verticies[0],this.verticies[1]));
 			terminal.finalizeRequest();
 		}
 	}
