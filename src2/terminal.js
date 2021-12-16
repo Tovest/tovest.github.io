@@ -86,6 +86,9 @@ class RequestDefault extends Request {
 			case "snap":
 				terminal.currentRequest = new RequestSnapPoint();
 				break;
+			case "line":
+				terminal.currentRequest = new RequestLine();
+				break;
 			case "consolelog":
 				terminal.currentRequest = new RequestConsoleLog("Log:");
 				break;
