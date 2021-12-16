@@ -187,7 +187,7 @@ class RequestLine extends Request {
 		this.verticies = [0,0];
 	}
 	logStatus(terminal) {
-		terminal.log(new LogStringMessage("Status: Request Snap Point"));
+		terminal.log(new LogStringMessage("Status: Request Line"));
 	}
 	inputString(string,terminal) {
 		this.vector3dRequester.inputString(string,terminal);
