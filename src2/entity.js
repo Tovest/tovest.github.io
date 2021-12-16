@@ -18,6 +18,7 @@ class SnapPointEntity extends Entity {
 		return new SnapPointEntity(new VertexEdge(x,y,z));
 	}
 	translateToCanvas(canvas,terminal) {
+		this.selectableArea.onHover.connectedTerminal = terminal;
 		this.selectableArea.onClick.connectedTerminal = terminal;
 		var screenCoords = canvas.camera.getScreenCoordsOfVertex(this.vertex);
 		this.selectableArea.x = screenCoords.x;
@@ -41,6 +42,7 @@ class LineEntity extends Entity {
 		this.drawingElement = new LineDrawing(0,0,0,0,0,0,"#00FF00");
 	}
 	translateToCanvas(canvas,terminal) {
+		this.selectableArea.onHover.connectedTerminal = terminal;
 		this.selectableArea.onClick.connectedTerminal = terminal;
 		var screenCoordsEndpoint1 = canvas.camera.getScreenCoordsOfVertex(this.endpointVertex1);
 		var screenCoordsEndpoint2 = canvas.camera.getScreenCoordsOfVertex(this.endpointVertex2);
@@ -71,6 +73,8 @@ class TriangleEntity extends Entity {
 		this.drawingElement = new TriangleDrawing(0,0,0,0,0,0,0,0,0,"#FF00FF");
 	}
 	translateToCanvas(canvas) {
+		this.selectableArea.onHover.connectedTerminal = terminal;
+		this.selectableArea.onClick.connectedTerminal = terminal;
 		var screenCoordsVertex1 = canvas.camera.getScreenCoordsOfVertex(this.vertex1);
 		var screenCoordsVertex2 = canvas.camera.getScreenCoordsOfVertex(this.vertex2);
 		var screenCoordsVertex3 = canvas.camera.getScreenCoordsOfVertex(this.vertex3);
