@@ -7,7 +7,7 @@ class Terminal {
 	finalizeRequest() {
 		//Alert or something
 		this.currentRequest = new RequestDefault();
-		this.workplace.render();
+		this.render();
 	}
 	render() {
 		this.workplace.render(this);
@@ -190,10 +190,10 @@ class RequestLine extends Request {
 		this.vector3dRequester.inputString(string,terminal);
 	}
 	inputVector3d(vector3d,terminal) {
-		this.verticies[this.numberOfVerticiesRecieved] = new VertexEdge(vector3d.x,vector3d.y,vector3d.z)
+		this.verticies[this.numberOfVerticiesRecieved] = new VertexEdge(vector3d.x,vector3d.y,vector3d.z);
 		this.numberOfVerticiesRecieved += 1;
 		if (this.numberOfVerticiesRecieved == 2) {
-			terminal.workplace.entityList.push(new Line(this.verticies[0],this.verticies[1]));
+			terminal.workplace.entityList.push(new LineEntity(this.verticies[0],this.verticies[1]));
 			terminal.finalizeRequest();
 		}
 	}
