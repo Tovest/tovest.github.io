@@ -72,7 +72,7 @@ class TriangleEntity extends Entity {
 		this.selectableArea.onClick = new EventLog("Clicked Triangle");
 		this.drawingElement = new TriangleDrawing(0,0,0,0,0,0,0,0,0,"#FF00FF");
 	}
-	translateToCanvas(canvas) {
+	translateToCanvas(canvas,terminal) {
 		this.selectableArea.onHover.connectedTerminal = terminal;
 		this.selectableArea.onClick.connectedTerminal = terminal;
 		var screenCoordsVertex1 = canvas.camera.getScreenCoordsOfVertex(this.vertex1);
