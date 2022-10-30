@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		
+<!-- -- -- -- -- HEAD -- -- -- -- -->
+
+<link rel="stylesheet" href="./style.css">
+<title>Box Of Features</title>
+
+<!-- -- -- -- -- /HEAD -- -- -- -- -->
+
+	</head>
+	<body>
+
+<!-- -- -- -- -- BODY -- -- -- -- -->
+
+<p>
+	Here's a tutorial on how to make and download a .zip file with PHP.
+	<br>
+	You basically have to: 
+	<br> - use the "header()" function so that the page becomes a download
+	<br> - use <a href="https://www.php.net/manual/en/class.ziparchive.php">ZipArchive</a> to create the desired .zip on the server
+	<br> - write every byte of the newly created .zip on the page
+	<br> - let the script end
+</p>
+
+<p>
+	Once the .php is setup, you'll have to open the page with window.open() through JavaScript, and the .zip will be downloaded.
+</p>
+
+<p>
+	The .php down here retries every second when it fails to create the .zip.
+	<br>
+	<span style="color: red">I don't know</span> if that's enough to guarantee the download of the newly created .zip, or if it's even necessary.
+	<br>
+	You could also just create the .zips with unique names, but for teaching purposes I feel like it's better to show how to use the open flags.
+</p>
+
+<hr>
+
+<pre style="tab-size: 8; -moz-tab-size: 8">
+&lt?php
+	
+	<span style="color: green">// Let's define the name of the file that the user downloads</span>
+	$download_name = "DownloadName.zip";
+	<span style="color: green">// And the name of the file that will be created on the server and then downloaded by the user</span>
+	$filename = "filename.zip";
+	
+	<span style="color: green">// Let's turn this page into one to download instead of one to visualize on the browser:</span>
+	<span style="color: green">// filename="XXX" only works with double quotes (") and it's the name of the file that will be downloaded</span>
+	header('Content-Disposition: attachment; filename="' . $download_name . '"');
+	
+	<span style="color: green">// Create a ZipArchive object</span>
+	$zip = new ZipArchive;	
+	
+	<span style="color: green">// Create the actual .zip file on the server, and open it.</span>
+	<span style="color: green">// With ZipArchive::EXCL we'll get the ZipArchive::ER_EXISTS error if the file already exists on the server,</span>
+	<span style="color: green">// We don't want that one so instead we retry every second</span>
+	<span style="color: green">// It has to be a !==</span>
+	while ($zip->open($filename, ZipArchive::CREATE | ZipArchive::EXCL) !== true) {sleep(1);};
+	
+	<span style="color: green">// Lets add an empty folder</span>
+	$zip->addEmptyDir("Example Folder");
+	
+	<span style="color: green">// Let's add an existing file (./some_folder/example.txt) into the "Example Folder" in the .zip:</span>
+	<span style="color: green">// The path origin is where this .php file is.</span>
+	$zip->addFile("./some_folder/example.txt","Example Folder/example.txt");
+	
+	<span style="color: green">// Once done, let's close the .zip to save the changes</span>
+	$zip->close();
+	
+	<span style="color: green">// Now let's write the .zip on this page, which will then be downloaded since we updated the header</span>
+	readfile($filename);
+	
+	<span style="color: green">// We can now delete the .zip from the server</span>
+	unlink($filename);
+	
+	
+	
+	<span style="color: green">// Now all you need to do is have your JavaScript script call</span>
+	<span style="color: green">//  > window.open("path to this php")</span>
+	<span style="color: green">// to download the .zip we setup up here</span>
+	
+?&gt
+</pre>
+
+<hr>
+
+<b>Execute the above .php :</b>
+<button input="button" onclick="window.open('./scripts/download_zip_example.php')">window.open('./scripts/download_zip_example.php')</button>
+
+
+<!-- -- -- -- -- /BODY -- -- -- -- -->
+
+	</body>
+</html>
+
