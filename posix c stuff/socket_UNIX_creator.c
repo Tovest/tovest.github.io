@@ -34,7 +34,7 @@ int acceptConnectionTo(int serverFd) {
 	//struct sockaddr_un clientUNIXAddress;
 	//int clientLen = sizeof(clientUNIXAddress);
 	//return accept(serverFd, (struct sockaddr*) &clientUNIXAddress, &clientLen);
-	// No need for the "address of the peer socket" (from the manual)
+	// Ignoriamo l' "address of the peer socket" (dal manuale)
 	return accept(serverFd, NULL, NULL);
 }
 
