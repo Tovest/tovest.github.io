@@ -157,8 +157,10 @@ Graph.Prototype.Permission = {
 		return undefined;
 	}
 	// Attempt to delete a connection
-	,attemptConnectionDeletion: function(connection,node1,node2,errorRepository) {
+	,attemptConnectionDeletion: function(connection,errorRepository) {
 		if (this.areDisonnectionRulesSatisfied(connection,errorRepository)) {
+			let node1 = connection.getNode1();
+			let node2 = connection.getNode2();
 			node1.removeOneSidedConnection(connection.connectionToNode2);
 			node2.removeOneSidedConnection(connection.connectionToNode1);
 			this.executeDisconnectionEvents(connection);
@@ -319,7 +321,7 @@ Graph.Prototype.Node = {
 				listOfOneSidedConnections.push(oneSidedConnection);
 			}
 			for (const oneSidedConnection of listOfOneSidedConnections) {
-				oneSidedConnection.masterConnection.confirmConnectionDeletion(this,oneSidedConnection.toNode);
+				oneSidedConnection.masterConnection.confirmConnectionDeletion();
 			}
 			if (this.handler != undefined) {
 				this.handler.removeNode(this);
@@ -363,9 +365,11 @@ Graph.Prototype.Connection = {
 		let node1 = this.getNode1();
 		let node2 = this.getNode2();
 		let permissionBetweenNodeTypes = node1.masterType.getPermissionToNodeType(node2.masterType);
-		return permissionBetweenNodeTypes.attemptConnectionDeletion(this,node1,node2,errorRepository);
+		return permissionBetweenNodeTypes.attemptConnectionDeletion(this,errorRepository);
 	}
-	,confirmConnectionDeletion: function(node1,node2) {
+	,confirmConnectionDeletion: function() {
+		let node1 = this.getNode1();
+		let node2 = this.getNode2();
 		node1.removeOneSidedConnection(this.connectionToNode2);
 		node2.removeOneSidedConnection(this.connectionToNode1);
 		node1.masterType.getPermissionToNodeType(node2.masterType).executeDisconnectionEvents(this);
