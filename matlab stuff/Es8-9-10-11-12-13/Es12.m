@@ -1,0 +1,24 @@
+[A1,b1] = linsis(5,3,"simme");
+[A2,b2] = linsis(5,4,"simme");
+A = [A1;A2];
+b = [b1;b2];
+[x,nr] = miaqr(A,b);
+disp(table(A,b));
+fprintf("\t\t   x da miaqr(A,b)\n\t\t  ________________\n");
+disp(x);
+fprintf("Norma del Vettore residuo: %d\n\n\n\n",nr);
+x = A\b;
+fprintf("\t\t\t  x da A\\b\n\t\t  ________________\n");
+disp(x);
+
+rng(99);
+A = ceil(rand(7,4)*1000);
+b = ceil(rand(7,1)*1000);
+[x,nr] = miaqr(A,b);
+disp(table(A,b));
+fprintf("\t      x da miaqr(A,b)\n\t\t__________________\n");
+disp(x);
+fprintf("Norma del Vettore residuo: %f\n\n\n\n",nr);
+x = A\b;
+fprintf("\t\t     x da A\\b\n\t\t__________________\n");
+disp(x);
