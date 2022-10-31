@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		
+<!-- -- -- -- -- HEAD -- -- -- -- -->
+
+<link rel="stylesheet" href="./style.css">
+<title>Scroll To Zoom</title>
+
+<!-- -- -- -- -- /HEAD -- -- -- -- -->
+
+	</head>
+	<body>
+
+<!-- -- -- -- -- BODY -- -- -- -- -->
+
+<h3>
+	Graph system script:
+</h3>
+
+<hr>
+
+<pre style="tab-size: 8; -moz-tab-size: 8">
+let Graph = {}
+Graph.Prototype = {}
+Graph.UnimplementedFunctions = {}
+
+////
+////// NodeType
+////
+Graph.NodeType = function() {
+	let OBJ = Object.create(Graph.Prototype.NodeType);
+	OBJ.nodes = [];
+	OBJ.oneSidedPermissions = [];
+	OBJ.creationRules = [];
+	OBJ.creationEvents = [];
+	OBJ.failedCreationEvents = [];
+	return OBJ;
+}
+Graph.Prototype.NodeType = {
+	// Setup the nodeType so that it can connect to the specified nodeType
+	allowConnectionsTo: function(nodeType,maxConnectionsToThisType = Infinity,maxConnectionsToArgumentType = Infinity) {
+		if (this.getPermissionToNodeType(nodeType) != undefined) {
+			return undefined;
+		}
+		return new Graph.Permission(this,nodeType,maxConnectionsToThisType,maxConnectionsToArgumentType);
+	}
+	// Add OneSidedPermission to list
+	,addOneSidedPermission: function(oneSidedPermission) {
+		this.oneSidedPermissions.push(oneSidedPermission);
+	}
+	// Get permission to nodeType
+	,getPermissionToNodeType: function(nodeType) {
+		for (const oneSidedPermission of this.oneSidedPermissions) {
+			if (oneSidedPermission.toNodeType == nodeType) {
+				return oneSidedPermission.masterPermission;
+			}
+		}
+		return undefined;
+	}
+	// Handle an attempted connection that involves a node of this type
+	,handleConnectionAttemptBetween: function(nodeOfThisType,otherNode,errorRepository) {
+		if (nodeOfThisType.masterType != this) console.error("First argument must be a node of this type");
+		let permissionBetweenNodeTypes = this.getPermissionToNodeType(otherNode.masterType);
+		if (permissionBetweenNodeTypes == undefined) {
+			errorRepository.addError(Graph.Error.MissingConnectionPermission);
+			return undefined;
+		}
+		return permissionBetweenNodeTypes.attemptConnectionBetween(nodeOfThisType,otherNode,errorRepository);
+	}
+	// Create Node of this type
+	,newNode: function(handler,errorRepository) {
+		if (this.areCreationRulesSatisfied(handler,errorRepository)) {
+			let newNode = new Graph.Node(this,handler);
+			this.executeCreationEvents(newNode);
+			return newNode;
+		}
+		this.executeFailedCreationEvents(handler,errorRepository);
+		return undefined;
+	}
+	// Check Creation Rules
+	,areCreationRulesSatisfied: function(handler,errorRepository) {
+		let noErrors = true;
+		for (const creationRule of this.creationRules) {
+			if (creationRule.isCreationRuleSatisfied(this,handler,errorRepository) == false) {
+				noErrors = false;
+			}
+		}
+		return noErrors;
+	}
+	// Execute Creation Events
+	,executeCreationEvents: function(node) {
+		for (const creationEvent of this.creationEvents) {
+			creationEvent.executeCreationEvent(node);
+		}
+	}
+	// Execute Failed Creation Events
+	,executeFailedCreationEvents: function(handler,errorRepository) {
+		for (const failedCreationEvent of this.failedCreationEvents) {
+			failedCreationEvent.executeFailedCreationEvent(this,handler,errorRepository);
+		}
+	}
+	// Adders
+	,addNode: function(node) {
+		this.nodes.push(node);
+	}
+	,addCreationRule: function(creationRule) {
+		this.creationRules.push(creationRule);
+	}
+	,addCreationEvent: function(creationEvent) {
+		this.creationEvents.push(creationEvent);
+	}
+	,addFailedCreationEvent: function(failedCreationEvent) {
+		this.failedCreationEvents.push(failedCreationEvent);
+	}
+	// Removers
+	,removeNode: function(node) {
+		this.nodes.splice(this.nodes.indexOf(node),1);
+	}
+}
+
+
+
+////
+////// OneSidedPermission
+////
+Graph.OneSidedPermission = function(toNodeType,maxConnections,masterPermission) {
+	let OBJ = Object.create(Graph.Prototype.OneSidedPermission);
+	OBJ.toNodeType = toNodeType;
+	OBJ.maxConnections = maxConnections;
+	OBJ.masterPermission = masterPermission;
+	return OBJ;
+}
+Graph.Prototype.OneSidedPermission = {
+}
+
+
+
+////
+////// Permission
+////
+Graph.Permission = function(nodeType1,nodeType2,maxConnectionsToNodesOfType1 = Infinity,maxConnectionsToNodesOfType2 = Infinity) {
+	let OBJ = Object.create(Graph.Prototype.Permission);
+	OBJ.permissionToNodeType1 = new Graph.OneSidedPermission(nodeType1,maxConnectionsToNodesOfType1,OBJ);
+	OBJ.permissionToNodeType2 = new Graph.OneSidedPermission(nodeType2,maxConnectionsToNodesOfType2,OBJ);
+	nodeType1.addOneSidedPermission(OBJ.permissionToNodeType2);
+	nodeType2.addOneSidedPermission(OBJ.permissionToNodeType1);
+	OBJ.connectionRules = [];
+	OBJ.connectionEvents = [];
+	OBJ.failedConnectionEvents = [];
+	OBJ.disconnectionRules = [];
+	OBJ.disconnectionEvents = [];
+	OBJ.failedDisconnectionEvents = [];
+	return OBJ;
+}
+Graph.Prototype.Permission = {
+	// Attempt to connect two nodes
+	attemptConnectionBetween: function(node1,node2,errorRepository) {
+		let maxConnectionsNotBreached = true;
+		if (node1.countConnectionsToNodeType(node2.masterType) >= this.getMaxConnectionsToNodeType(node2.masterType)) {
+			maxConnectionsNotBreached = false;
+			errorRepository.addError(new Graph.Error.MaxConnectionsReached(node1,node2));
+		}
+		if (node2.countConnectionsToNodeType(node1.masterType) >= this.getMaxConnectionsToNodeType(node1.masterType)) {
+			maxConnectionsNotBreached = false;
+			errorRepository.addError(new Graph.Error.MaxConnectionsReached(node2,node1));
+		}
+		if (this.areConnectionRulesSatisfied(node1,node2,errorRepository) && maxConnectionsNotBreached) {
+			let connection = new Graph.Connection(node1,node2);
+			this.executeConnectionEvents(connection);
+			if (node1.handler != undefined) {
+				node1.handler.onConnectionToNode(node1,node2,connection);
+			}
+			if (node2.handler != undefined) {
+				node2.handler.onConnectionToNode(node2,node1,connection);
+			}
+			return connection;
+		}
+		this.executeFailedConnectionEvents(node1,node2,errorRepository);
+		return undefined;
+	}
+	// Attempt to delete a connection
+	,attemptConnectionDeletion: function(connection,errorRepository) {
+		if (this.areDisonnectionRulesSatisfied(connection,errorRepository)) {
+			let node1 = connection.getNode1();
+			let node2 = connection.getNode2();
+			node1.removeOneSidedConnection(connection.connectionToNode2);
+			node2.removeOneSidedConnection(connection.connectionToNode1);
+			this.executeDisconnectionEvents(connection);
+			if (node1.handler != undefined) {
+				node1.handler.onDisconnectionFromNode(node1,node2,connection);
+			}
+			if (node2.handler != undefined) {
+				node2.handler.onDisconnectionFromNode(node2,node1,connection);
+			}
+			return true;
+		}
+		this.executeFailedDisconnectionEvents(connection,errorRepository);
+		return false;
+	}
+	// Check Rules
+	,areConnectionRulesSatisfied: function(node1,node2,errorRepository) {
+		let noErrors = true;
+		for (const connectionRule of this.connectionRules) {
+			if (connectionRule.isConnectionRuleSatisfied(node1,node2,errorRepository) == false) {
+				noErrors = false;
+			}
+		}
+		return noErrors;
+	}
+	,areDisonnectionRulesSatisfied: function(connection,errorRepository) {
+		let noErrors = true;
+		for (const disconnectionRule of this.disconnectionRules) {
+			if (disconnectionRule.isDisconnectionRuleSatisfied(connection,errorRepository) == false) {
+				noErrors = false;
+			}
+		}
+		return noErrors;
+	}
+	// Execute Events
+	,executeConnectionEvents: function(connection) {
+		for (const connectionEvent of this.connectionEvents) {
+			connectionEvent.executeConnectionEvent(connection);
+		}
+	}
+	,executeDisconnectionEvents: function(connection) {
+		for (const disconnectionEvent of this.disconnectionEvents) {
+			disconnectionEvent.executeDisconnectionEvent(connection);
+		}
+	}
+	// Execute Failure Events
+	,executeFailedConnectionEvents: function(node1,node2,errorRepository) {
+		for (const failedConnectionEvent of this.failedConnectionEvents) {
+			failedConnectionEvent.executeFailedConnectionEvent(node1,node2,errorRepository);
+		}
+	}
+	,executeFailedDisconnectionEvents: function(connection,errorRepository) {
+		for (const failedDisconnectionEvent of this.failedDisconnectionEvents) {
+			failedDisconnectionEvent.executeFailedDisconnectionEvent(connection,errorRepository);
+		}
+	}
+	// Adders
+	,addConnectionRule: function(connectionRule) {
+		this.connectionRules.push(connectionRule);
+	}
+	,addConnectionEvent: function(connectionEvent) {
+		this.connectionEvents.push(connectionEvent);
+	}
+	,addFailedConnectionEvent: function(failedConnectionEvent) {
+		this.failedConnectionEvents.push(failedConnectionEvent);
+	}
+	,addDisconnectionRule: function(disconnectionRule) {
+		this.disconnectionRules.push(disconnectionRule);
+	}
+	,addDisconnectionEvent: function(disconnectionEvent) {
+		this.disconnectionEvents.push(disconnectionEvent);
+	}
+	,addFailedDisconnectionEvent: function(failedDisconnectionEvent) {
+		this.failedDisconnectionEvents.push(failedDisconnectionEvent);
+	}
+	// Info Getters
+	,getNodeType1: function() {
+		return this.permissionToNodeType1.toNodeType;
+	}
+	,getNodeType2: function() {
+		return this.permissionToNodeType2.toNodeType;
+	}
+	,getMaxConnectionsToNodeType1: function() {
+		return this.permissionToNodeType1.maxConnections;
+	}
+	,getMaxConnectionsToNodeType2: function() {
+		return this.permissionToNodeType2.maxConnections;
+	}
+	,getMaxConnectionsToNodeType: function(nodeType) {
+		if (nodeType == this.getNodeType1()) return this.getMaxConnectionsToNodeType1();
+		if (nodeType == this.getNodeType2()) return this.getMaxConnectionsToNodeType2();
+		console.error("NodeType isn't associated with this Permission")
+		return undefined;
+	}
+}
+
+
+
+////
+////// Node
+////
+Graph.Node = function(masterType,handler) {
+	let OBJ = Object.create(Graph.Prototype.Node);
+	OBJ.masterType = masterType;
+	masterType.addNode(OBJ);
+	OBJ.handler = handler;
+	OBJ.oneSidedConnections = [];
+	if (handler != undefined) {
+		handler.addNode(OBJ);
+		handler.onNewNodeJoined(OBJ);
+	}
+	return OBJ;
+}
+Graph.Prototype.Node = {
+	// Connect to other nodes
+	connectTo: function(node,errorRepository) {
+		return this.masterType.handleConnectionAttemptBetween(this,node,errorRepository);
+	}
+	// Add OneSidedPermission to list
+	,addOneSidedConnection: function(oneSidedConnection) {
+		this.oneSidedConnections.push(oneSidedConnection);
+	}
+	// Remove OneSidedPermission from list
+	,removeOneSidedConnection: function(oneSidedConnection) {
+		this.oneSidedConnections.splice(this.oneSidedConnections.indexOf(oneSidedConnection),1);
+	}
+	// Get connection to node
+	,getConnectionToNode: function(node) {
+		for (const oneSidedConnection of this.oneSidedConnections) {
+			if (oneSidedConnection.toNode == node) {
+				return oneSidedConnection.masterConnection;
+			}
+		}
+		return undefined;
+	}
+	// Count connections to nodeType
+	,countConnectionsToNodeType: function(nodeType) {
+		let counter = 0;
+		for (const oneSidedConnection of this.oneSidedConnections) {
+			if (oneSidedConnection.toNode.masterType == nodeType) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+	// Delete Node
+	,deleteNode: function(errorRepository) {
+		let permission = undefined;
+		let allConnectionDeletionsArePossible = true;
+		for (const oneSidedConnection of this.oneSidedConnections) {
+			permission = this.masterType.getPermissionToNodeType(oneSidedConnection.toNode.masterType);
+			if (permission.areDisonnectionRulesSatisfied(oneSidedConnection.masterConnection,errorRepository) == false) {
+				allConnectionDeletionsArePossible = false;
+			}
+		}
+		if (allConnectionDeletionsArePossible) {
+			let listOfOneSidedConnections = []
+			for (const oneSidedConnection of this.oneSidedConnections) {
+				listOfOneSidedConnections.push(oneSidedConnection);
+			}
+			for (const oneSidedConnection of listOfOneSidedConnections) {
+				oneSidedConnection.masterConnection.confirmConnectionDeletion();
+			}
+			if (this.handler != undefined) {
+				this.handler.removeNode(this);
+				this.handler.onNodeLeft(this);
+			}
+		}
+		return allConnectionDeletionsArePossible;
+	}
+}
+
+
+
+////
+////// OneSidedConnection
+////
+Graph.OneSidedConnection = function(toNode,masterConnection) {
+	let OBJ = Object.create(Graph.Prototype.OneSidedConnection);
+	OBJ.toNode = toNode;
+	OBJ.masterConnection = masterConnection;
+	return OBJ;
+}
+Graph.Prototype.OneSidedConnection = {
+}
+
+
+
+////
+////// Connection
+////
+Graph.Connection = function(node1,node2) {
+	let OBJ = Object.create(Graph.Prototype.Connection);
+	OBJ.connectionToNode1 = new Graph.OneSidedConnection(node1,OBJ);
+	OBJ.connectionToNode2 = new Graph.OneSidedConnection(node2,OBJ);
+	node1.addOneSidedConnection(OBJ.connectionToNode2);
+	node2.addOneSidedConnection(OBJ.connectionToNode1);
+	return OBJ;
+}
+Graph.Prototype.Connection = {
+	// Delete connection
+	deleteConnection: function(errorRepository) {
+		let node1 = this.getNode1();
+		let node2 = this.getNode2();
+		let permissionBetweenNodeTypes = node1.masterType.getPermissionToNodeType(node2.masterType);
+		return permissionBetweenNodeTypes.attemptConnectionDeletion(this,errorRepository);
+	}
+	,confirmConnectionDeletion: function() {
+		let node1 = this.getNode1();
+		let node2 = this.getNode2();
+		node1.removeOneSidedConnection(this.connectionToNode2);
+		node2.removeOneSidedConnection(this.connectionToNode1);
+		node1.masterType.getPermissionToNodeType(node2.masterType).executeDisconnectionEvents(this);
+		if (node1.handler != undefined) {
+			node1.handler.onDisconnectionFromNode(node1,node2,this);
+		}
+		if (node2.handler != undefined) {
+			node2.handler.onDisconnectionFromNode(node2,node1,this);
+		}
+		return true;
+	}
+	// Node Getters
+	,getNode1: function() {
+		return this.connectionToNode1.toNode;
+	}
+	,getNode2: function() {
+		return this.connectionToNode2.toNode;
+	}
+}
+
+
+
+////
+////// ErrorRepository
+////
+Graph.ErrorRepository = function() {
+	let OBJ = Object.create(Graph.Prototype.ErrorRepository);
+	OBJ.errorList = [];
+	return OBJ;
+}
+Graph.Prototype.ErrorRepository = {
+	addError: function(error) {
+		this.errorList.push(error);
+	}
+	,hasErrors: function() {
+		return (this.errorList.length > 0);
+	}
+}
+
+
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////// Base Entities (prototypes and simpliest implementation)
+////////////////////////////////////////////////
+Graph.Base = {}
+Graph.Base.Implementation = {}
+Graph.Base.Utilities = {}
+
+
+
+////
+////// Base Handler
+////
+Graph.Base.Handler = {
+	addNode: function(node) {
+		console.warn("call to unimplemented addNode method");
+	}
+	,removeNode: function(node) {
+		console.warn("call to unimplemented removeNode method");
+	}
+	,onNewNodeJoined: function(node) {
+		console.warn("call to unimplemented onNewNodeJoined method");
+	}
+	,onNodeLeft: function(node) {
+		console.warn("call to unimplemented onNodeLeft method");
+	}
+	,onConnectionToNode: function(nodeUnderHandler,connectedNode,connection) {
+		console.warn("call to unimplemented onConnectionToNode method");
+	}
+	,onDisconnectionFromNode: function(nodeUnderHandler,disconnectedNode,connection) {
+		console.error("call to unimplemented onDisconnectionToNode method");
+	}
+}
+////
+////// Simpliest Handler Implementation
+////
+Graph.Base.Utilities.pushNode = function(node) {
+	this.nodes.push(node);
+}
+Graph.Base.Utilities.removeNode = function(node) {
+	this.nodes.splice(this.nodes.indexOf(node),1);
+}
+Graph.Base.Implementation.Handler = function() {
+	let OBJ = Object.create(Graph.Base.Handler);
+	OBJ.nodes = [];
+	OBJ.addNode = Graph.Base.Utilities.pushNode;
+	OBJ.removeNode = Graph.Base.Utilities.removeNode;
+	return OBJ;
+}
+
+
+
+////
+////// Base Creation Rule
+////
+Graph.Base.CreationRule = {
+	isCreationRuleSatisfied: function(nodeType,targetHandler,errorRepository) {
+		console.warn("call to unimplemented isCreationRuleSatisfied method");
+		return false;
+	}
+}
+////
+////// Base Connection Rule
+////
+Graph.Base.ConnectionRule = {
+	isConnectionRuleSatisfied: function(node1,node2,errorRepository) {
+		console.warn("call to unimplemented isConnectionRuleSatisfied method");
+		return false;
+	}
+}
+////
+////// Base Disconnection Rule
+////
+Graph.Base.DisconnectionRule = {
+	isDisconnectionRuleSatisfied: function(connection,errorRepository) {
+		console.warn("call to unimplemented isDisconnectionRuleSatisfied method");
+		return false;
+	}
+}
+
+
+
+////
+////// Base Creation Event
+////
+Graph.Base.CreationEvent = {
+	executeCreationEvent: function(node) {
+		console.warn("call to unimplemented executeCreationEvent method");
+	}
+}
+////
+////// Base Connection Event
+////
+Graph.Base.ConnectionEvent = {
+	executeConnectionEvent: function(connection) {
+		console.warn("call to unimplemented executeConnectionEvent method");
+	}
+}
+////
+////// Base Disonnection Event
+////
+Graph.Base.DisconnectionEvent = {
+	executeDisconnectionEvent: function(connection) {
+		console.warn("call to unimplemented executeDisconnectionEvent method");
+	}
+}
+
+
+
+////
+////// Base Failed Creation Event
+////
+Graph.Base.FailedCreationEvent = {
+	executeFailedCreationEvent: function(nodeType,targetHandler,errorRepository) {
+		console.warn("call to unimplemented executeFailedCreationEvent method");
+		return false;
+	}
+}
+////
+////// Base Failed Connection Event
+////
+Graph.Base.FailedConnectionEvent = {
+	executeFailedConnectionEvent: function(node1,node2,errorRepository) {
+		console.warn("call to unimplemented executeFailedConnectionEvent method");
+		return false;
+	}
+}
+////
+////// Base Failed Disconnection Event
+////
+Graph.Base.FailedDisconnectionEvent = {
+	executeFailedDisconnectionEvent: function(connection,errorRepository) {
+		console.warn("call to unimplemented executeFailedDisconnectionEvent method");
+	}
+}
+
+
+
+////
+////// Base Error
+////
+Graph.Base.Error = {
+	message: "ToDo set error message"
+	,consoleLogMessage: function() {
+		console.log(this.message);
+	}
+}
+
+
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////// Errors
+////////////////////////////////////////////////
+Graph.Error = {}
+Graph.Error.Prototype = {}
+
+
+
+////
+////// Missing Connection Permission
+////
+Graph.Error.MissingConnectionPermission = Object.create(Graph.Base.Error);
+Graph.Error.MissingConnectionPermission.message = "The two nodes aren't allowed to connect";
+
+
+
+////
+////// Reached max connections
+////
+Graph.Error.MaxConnectionsReached = function(nodeUnableToConnect,otherNode) {
+	let OBJ = Object.create(Graph.Base.Error);
+	OBJ.message = "Reached max connections";
+	OBJ.nodeUnableToConnect = nodeUnableToConnect;
+	OBJ.otherNode = otherNode;
+	return OBJ;
+}
+
+</pre>
+
+
+<!-- -- -- -- -- /BODY -- -- -- -- -->
+
+	</body>
+</html>
