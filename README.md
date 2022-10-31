@@ -1,3 +1,3 @@
 # tovest.github.io
 
-Repository for diffrent projects
+Repository for a few projects
