@@ -167,7 +167,7 @@ Graph.Prototype.Permission = {
 			errorRepository.addError(new Graph.Error.MaxConnectionsReached(node2,node1));
 		}
 		if (this.areConnectionRulesSatisfied(node1,node2,errorRepository) && maxConnectionsNotBreached) {
-			let connection = new Graph.Connection(node1,node2);
+			let connection = new Graph.Connection(node1,node2,this);
 			this.executeConnectionEvents(connection);
 			if (node1.handler != undefined) {
 				node1.handler.onConnectionToNode(node1,node2,connection);
@@ -181,19 +181,9 @@ Graph.Prototype.Permission = {
 		return undefined;
 	}
 	// Attempt to delete a connection
-	,attemptConnectionDeletion: function(connection,errorRepository) {
+	,attemptDisconnectionOf: function(connection,errorRepository) {
 		if (this.areDisonnectionRulesSatisfied(connection,errorRepository)) {
-			let node1 = connection.getNode1();
-			let node2 = connection.getNode2();
-			node1.removeOneSidedConnection(connection.connectionToNode2);
-			node2.removeOneSidedConnection(connection.connectionToNode1);
-			this.executeDisconnectionEvents(connection);
-			if (node1.handler != undefined) {
-				node1.handler.onDisconnectionFromNode(node1,node2,connection);
-			}
-			if (node2.handler != undefined) {
-				node2.handler.onDisconnectionFromNode(node2,node1,connection);
-			}
+			connection.finalizeDisconnection();
 			return true;
 		}
 		this.executeFailedDisconnectionEvents(connection,errorRepository);
@@ -331,11 +321,9 @@ Graph.Prototype.Node = {
 	}
 	// Delete Node
 	,deleteNode: function(errorRepository) {
-		let permission = undefined;
 		let allConnectionDeletionsArePossible = true;
 		for (const oneSidedConnection of this.oneSidedConnections) {
-			permission = this.masterType.getPermissionToNodeType(oneSidedConnection.toNode.masterType);
-			if (permission.areDisonnectionRulesSatisfied(oneSidedConnection.masterConnection,errorRepository) == false) {
+			if (oneSidedConnection.masterConnection.masterPermission.areDisonnectionRulesSatisfied(oneSidedConnection.masterConnection,errorRepository) == false) {
 				allConnectionDeletionsArePossible = false;
 			}
 		}
@@ -345,7 +333,7 @@ Graph.Prototype.Node = {
 				listOfOneSidedConnections.push(oneSidedConnection);
 			}
 			for (const oneSidedConnection of listOfOneSidedConnections) {
-				oneSidedConnection.masterConnection.confirmConnectionDeletion();
+				oneSidedConnection.masterConnection.finalizeDisconnection();
 			}
 			if (this.handler != undefined) {
 				this.handler.removeNode(this);
@@ -375,8 +363,9 @@ Graph.Prototype.OneSidedConnection = {
 ////
 ////// Connection
 ////
-Graph.Connection = function(node1,node2) {
+Graph.Connection = function(node1,node2,masterPermission) {
 	let OBJ = Object.create(Graph.Prototype.Connection);
+	OBJ.masterPermission = masterPermission;
 	OBJ.connectionToNode1 = new Graph.OneSidedConnection(node1,OBJ);
 	OBJ.connectionToNode2 = new Graph.OneSidedConnection(node2,OBJ);
 	node1.addOneSidedConnection(OBJ.connectionToNode2);
@@ -386,24 +375,22 @@ Graph.Connection = function(node1,node2) {
 Graph.Prototype.Connection = {
 	// Delete connection
 	deleteConnection: function(errorRepository) {
-		let node1 = this.getNode1();
-		let node2 = this.getNode2();
-		let permissionBetweenNodeTypes = node1.masterType.getPermissionToNodeType(node2.masterType);
-		return permissionBetweenNodeTypes.attemptConnectionDeletion(this,errorRepository);
+		return this.masterPermission.attemptDisconnectionOf(this,errorRepository);
 	}
-	,confirmConnectionDeletion: function() {
+	,finalizeDisconnection: function() {
 		let node1 = this.getNode1();
 		let node2 = this.getNode2();
 		node1.removeOneSidedConnection(this.connectionToNode2);
 		node2.removeOneSidedConnection(this.connectionToNode1);
-		node1.masterType.getPermissionToNodeType(node2.masterType).executeDisconnectionEvents(this);
+		this.masterPermission.executeDisconnectionEvents(this);
 		if (node1.handler != undefined) {
 			node1.handler.onDisconnectionFromNode(node1,node2,this);
 		}
 		if (node2.handler != undefined) {
 			node2.handler.onDisconnectionFromNode(node2,node1,this);
 		}
-		return true;
+		node1.masterType.removeNode(node1);
+		node2.masterType.removeNode(node2);
 	}
 	// Node Getters
 	,getNode1: function() {
