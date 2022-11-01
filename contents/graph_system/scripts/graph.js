@@ -1,6 +1,5 @@
 let Graph = {}
 Graph.Prototype = {}
-Graph.UnimplementedFunctions = {}
 
 ////
 ////// NodeType
